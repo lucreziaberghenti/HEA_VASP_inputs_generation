@@ -158,7 +158,8 @@ def Big_conf(conf):
     big_conf=np.concatenate((big_conf, big_conf))
     return big_conf
 
-#functions that checks if the input matrix is equivalent to the matrix saved in saved
+#functions that checks if conf matrix is equivalent to one of the matrices of saved
+#returns 1 if matrices are equivalent, otherwise it returns 0
 def Equivalent(conf, saved):
     #repeat is 1 unless a non-equivalent new conf is generated
     repeat=1
@@ -195,7 +196,7 @@ def Equivalent(conf, saved):
     return repeat
 
 
-#function that generates a new random configuration non equivalent to the ones in saved
+#function that generates a new random configuration non-equivalent to the ones in saved
 def newConf(saved):
     #variable that iterates the loop if an equivalent configuration is generated (and consequently discarded)
     #set to zero when successfully generate a new conf inequivalent to the ones saved
@@ -209,7 +210,9 @@ def newConf(saved):
     while repeat:
         #random permutation of linear array
         temp=np.random.permutation(temp)
+        #then reshap the permutated array with the desired dimensions
         conf=np.reshape(temp, (nslice,nrow,ncol))
+        #check if conf is equivalente to the matrices of saved
         repeat=Equivalent(conf, saved)
         
         return conf
