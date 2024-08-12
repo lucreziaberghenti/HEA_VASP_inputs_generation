@@ -181,3 +181,19 @@ def Equivalent(conf):
 
 #function that generates a new random configuration non equivalent to the ones saved
 def newConf(saved):
+    #variable that iterates the loop if an equivalent configuration is generated (and consequently discarded)
+    #set to zero when successfully generate a new conf inequivalent to the ones saved
+    repeat=1
+    
+    #define a linear array with elements 1, 2, 3, 4, 5 repeated n1, n2, n3, n4, n5 times
+    temp=np.array([], dtype=int)
+    for i in range(1,6):
+        temp=np.append(temp, np.repeat(i,n[i-1]))   
+    
+    while repeat:
+        #random permutation of linear array
+        temp=np.random.permutation(temp)
+        conf=np.reshape(temp, (nslice,nrow,ncol))
+        repeat=Equivalent(conf)
+        
+        return conf
