@@ -46,7 +46,6 @@ conf=functions.newConf(saved)
 #increment the counter
 s+=1
 
-print("conf n. ", s, " generated:\n",conf,"\n")
 saved=np.append(saved, conf)
 
 #create array of strings where atomic species are listed in order to use python ase
