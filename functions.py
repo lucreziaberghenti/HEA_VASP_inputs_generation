@@ -125,6 +125,22 @@ def Find(m1,m2):
 
 #function that takes as input a conf of dim (nslice,nrow,ncol) and returns a matrix 8-times bigger
 def Big_conf(conf):
+    #dimensions of 8x conf matrix 
+    Nslice=2*nslice
+    Nrow=2*nrow
+    Ncol=2*ncol
+
+    big_conf=np.zeros((nslice,Nrow,Ncol),dtype=int)
+
+    for sl in range(0,nslice):
+        for row in range(0,nrow):
+            big_conf[sl,row]=np.concatenate((conf[sl,row],conf[sl,row]))
+
+        for col in range(0,Ncol):
+            big_conf[sl,:,col]=np.concatenate((conf[sl,:,(col%ncol)],conf[sl,:,(col%ncol)]))   #%ncol modulo ncol because conf has half columns of new_conf
+
+    big_conf=np.concatenate((big_conf, big_conf))
+    return big_conf
 
 #functions that checks if the input matrix is equivalent to the matrix saved in "saved.npy"
 def Equivalent(conf):
