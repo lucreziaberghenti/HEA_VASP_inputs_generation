@@ -14,7 +14,10 @@ n_tot=np.sum(n)
 #create an np array of dim (60, 3) of cartesian coordinates (x,y,z) for each atom
 #positions of lattice sites don't depend on configuration
 coord=np.zeros([n_tot,3],dtype=float) 
-coord=Coordinates()
+coord=functions.Coordinates()
+
+#convert the np coord array into a list in order to use python ase function
+positions=coord.tolist()
 
 #saved will be an array of (3,4,5)-dim arrays representing a configuration each
 saved=np.array([],dtype=int)
@@ -22,10 +25,10 @@ saved=np.array([],dtype=int)
 #generate inequivalent random configuration
 #generate random matrix (nslice x nrow x ncol)=(3, 4, 5) with elements 1,2,3,4,5 repeated n1,n2,n3,n4,n5 times
 #the function newConf also check that in "saved" there is not an equivalent conf to the one generated
-conf=newConf(saved)
+conf=functions.newConf(saved)
 
 #create array of strings where atomic species are listed in order to use python ase
 species=[]
 
 #function that generates VASP input files
-VASP_input(species,positions,s)
+functions.VASP_input(species,positions,s)
