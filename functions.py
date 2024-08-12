@@ -17,6 +17,66 @@ n_tot=np.sum(n)
 #it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 #it returns the input files
 def VASP_input(species, positions, n):
+    #lattice vectors a1, a2, a3 #Angstrom
+    a1=ncol*a_nn
+    a2=nrow*a_nn*math.sqrt(3)/2
+    a3=nslice*a_nn*math.sqrt(6)/3
+    
+    cell = [[a1,0,0], [0,a2,0], [0,0,a3]]
+    
+    #Now define the settings for VASP
+    #settings for the INCAR file. The flags must be in lowercase.This dictionary can be empty
+    incar_settings = {
+        'istart': 0,
+        'icharg':2,
+        'encut': 400,
+        'algo': 'Normal',
+        'nelm': 60,
+        'ediff': 1E-06,
+        'ismear': 1,
+        'sigma': 0.1,
+        'ispin': 2,
+        'ediffg': -5E-02,
+        'nsw': 20,
+        'ibrion': 1,
+    }
+
+    #settings for the KPOINTS file
+    kpoints_settings = {
+        'kpts': (2, 3, 4), # grid
+        'gamma': True     
+    }
+    
+    #setup for pseudopotentials
+    pseudo_setup = {'base': 'recommended'}
+
+    #directory where the input files will be written, the input files of the nth conf are saved in "conf_n"
+    name='conf_'+str(n)
+    outdir = name
+
+    #set the path to the VASP pseudopotentials
+    #NOTE: the directory must contain a folder named 'potpaw_PBE' with all the folders with the name of the elements, each containing its POTCAR
+    #it simply the folder for PAW PBE provided with VASP
+    os.environ["VASP_PP_PATH"] = 'ase_pseudo'
+
+    # Create the Vasp calculator
+    calculator = Vasp(
+                      directory=outdir,         #directory where the files will be written
+                      xc='PBE', 
+                      setups=pseudo_setup,
+                      **incar_settings,
+                      **kpoints_settings
+                      )
+    
+    #Create the Atoms object
+    from ase import Atoms
+    atoms = Atoms(symbols=species, 
+                  positions=positions, 
+                  cell=cell,
+                  pbc=True)
+
+    # Write the input files INCAR, POSCAR, POTCAR, KPOINTS in the directory specified above
+    calculator.write_input(atoms)
 
 #for simplicity when new conf is generated we use numbers, then the following function translates from numbers to elements
 def element(x): 
