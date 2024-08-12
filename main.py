@@ -36,9 +36,6 @@ if os.path.exists(path):
 else:
     #number of saved configurations is zero
     s=0
-    
-print("number of saved configurations: ",s)   
-#print("list of saved configurations:\n",saved,"\n")
 
 
 #generate inequivalent random configuration
@@ -61,4 +58,3 @@ functions.VASP_input(species,positions,s)
 #reshape using the update number of saved configurations s, also because when I add the new conf "saved" becomes linear
 saved=np.reshape(saved, (s,nslice,nrow,ncol))
 np.save('saved.npy',saved)
-print("updated list of saved configurations:\n", saved)
