@@ -130,19 +130,23 @@ def Big_conf(conf):
     Nrow=2*nrow
     Ncol=2*ncol
 
+    #inizitialize big_conf initially doubling only in the xy-plane
     big_conf=np.zeros((nslice,Nrow,Ncol),dtype=int)
 
     for sl in range(0,nslice):
+        #rows of big_conf obtained by concatenating conf rows with itself
         for row in range(0,nrow):
             big_conf[sl,row]=np.concatenate((conf[sl,row],conf[sl,row]))
-
+        #analogous for columns
         for col in range(0,Ncol):
             big_conf[sl,:,col]=np.concatenate((conf[sl,:,(col%ncol)],conf[sl,:,(col%ncol)]))   #%ncol modulo ncol because conf has half columns of new_conf
 
+    #now I have doubled only in xy dimensions by concatenating rows and columns, big_conf has dim: (3,8,10)
+    #concatenate big_conf with itself to double also along z
     big_conf=np.concatenate((big_conf, big_conf))
     return big_conf
 
-#functions that checks if the input matrix is equivalent to the matrix saved in "saved.npy"
+#functions that checks if the input matrix is equivalent to the matrix saved in saved
 def Equivalent(conf):
     #repeat is 1 unless a non-equivalent new conf is generated
     repeat=1
@@ -179,7 +183,7 @@ def Equivalent(conf):
     return repeat
 
 
-#function that generates a new random configuration non equivalent to the ones saved
+#function that generates a new random configuration non equivalent to the ones in saved
 def newConf(saved):
     #variable that iterates the loop if an equivalent configuration is generated (and consequently discarded)
     #set to zero when successfully generate a new conf inequivalent to the ones saved
