@@ -79,7 +79,19 @@ def VASP_input(species, positions, n):
     calculator.write_input(atoms)
 
 #for simplicity when new conf is generated we use numbers, then the following function translates from numbers to elements
-def element(x): 
+def element(x):
+    if x==1:
+        return 'Co'
+    if x==2:
+        return 'Cr'
+    if x==3:
+        return 'Fe'
+    if x==4:
+        return 'Mn'
+    if x==5:
+        return 'Ni'
+    else:
+        return 'error' 
 
 #function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
 def Coordinates(): 
