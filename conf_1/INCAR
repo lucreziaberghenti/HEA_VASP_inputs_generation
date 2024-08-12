@@ -1,0 +1,14 @@
+INCAR created by Atomic Simulation Environment
+ ENCUT = 400.000000
+ SIGMA = 0.100000
+ EDIFF = 1.00e-06
+ EDIFFG = -5.00e-02
+ ALGO = Normal
+ GGA = PE
+ IBRION = 1
+ ICHARG = 2
+ ISMEAR = 1
+ ISPIN = 2
+ ISTART = 0
+ NELM = 60
+ NSW = 20
