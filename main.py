@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import functions
 
 #global variables
 a_fcc=3.6 #lattice parameter, angstrom 
