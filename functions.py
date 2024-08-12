@@ -144,6 +144,40 @@ def Big_conf(conf):
 
 #functions that checks if the input matrix is equivalent to the matrix saved in "saved.npy"
 def Equivalent(conf):
+    #repeat is 1 unless a non-equivalent new conf is generated
+    repeat=1
+    big_conf=Big_conf(conf)
+            
+    #check if equivalent matrix is already saved in "saved.npy"
+
+    #check first if saved is empty
+    if len(saved)==0:
+        #print("no saved matrices, add this one!\n")
+        repeat=0
+
+    #if saved is not empty, loop over the elements
+    else:
+        #variable that becomes 1 if an equivalent matrix is found, 
+        #it breaks the loop that searches a copy in the saved matrices
+        copy=0
+
+        #loop on the saved matrices to find if an equivalent matrix is already present
+        for m in np.nditer(saved):
+            #if an equivalent matrix is present
+            if Find(big_conf,m):
+                #print("an equivalent matrix is already present!\n")
+                #copy becomes 1 and exits the loop without saving the new matrix
+                copy=1 
+                break
+
+        #if at the end of the loop over the saved matrices copy is still zero because no equivalent matrix has been found, 
+        #then save the new configuration 
+        if(copy==0): 
+            #a non-equivalent nwe conf is found, no need to repeat the loop
+            repeat=0
+            
+    return repeat
+
 
 #function that generates a new random configuration non equivalent to the ones saved
 def newConf(saved):
