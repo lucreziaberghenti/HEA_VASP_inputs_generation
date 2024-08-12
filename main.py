@@ -51,11 +51,6 @@ s+=1
 print("conf n. ", s, " generated:\n",conf,"\n")
 saved=np.append(saved, conf)
 
-#generate inequivalent random configuration
-#generate random matrix (nslice x nrow x ncol)=(3, 4, 5) with elements 1,2,3,4,5 repeated n1,n2,n3,n4,n5 times
-#the function newConf also check that in "saved" there is not an equivalent conf to the one generated
-conf=functions.newConf(saved)
-
 #create array of strings where atomic species are listed in order to use python ase
 species=functions.Generate_species(conf)
 
