@@ -93,6 +93,18 @@ def element(x):
         return 'Ni'
     else:
         return 'error' 
+    
+#function that given as input a (nslice,nrow,ncol) matrix of elements 1,2,3,4,5 returns the corresponding list of elements 
+#the index of each element in the list is associated to a certain position (slice,row,col) in the matrix   
+def Generate_species(conf):
+    species=[]
+
+    for sl in range(0, nslice):
+        for row in range(0,nrow):
+            for col in range(0,ncol):
+                species.append(element(conf[sl,row,col]))
+                
+    return species
 
 #function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
 def Coordinates(): 
