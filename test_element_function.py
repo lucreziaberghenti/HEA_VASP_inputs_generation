@@ -25,6 +25,6 @@ class Test_Element_Function(unittest.TestCase):
         self.assertEqual(element(-10),'error')
 
 
-        #if the file is correctly executed then tests are executed
-        if __name__ == '__main__':
-            unittest.main()
+#if the file is correctly executed then tests are executed
+if __name__ == '__main__':
+    unittest.main()
