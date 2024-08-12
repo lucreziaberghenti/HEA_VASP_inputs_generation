@@ -159,7 +159,7 @@ def Big_conf(conf):
     return big_conf
 
 #functions that checks if the input matrix is equivalent to the matrix saved in saved
-def Equivalent(conf):
+def Equivalent(conf, saved):
     #repeat is 1 unless a non-equivalent new conf is generated
     repeat=1
     big_conf=Big_conf(conf)
@@ -210,6 +210,6 @@ def newConf(saved):
         #random permutation of linear array
         temp=np.random.permutation(temp)
         conf=np.reshape(temp, (nslice,nrow,ncol))
-        repeat=Equivalent(conf)
+        repeat=Equivalent(conf, saved)
         
         return conf
