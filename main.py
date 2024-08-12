@@ -30,5 +30,10 @@ conf=functions.newConf(saved)
 #create array of strings where atomic species are listed in order to use python ase
 species=[]
 
+for sl in range(0, nslice):
+    for row in range(0,nrow):
+        for col in range(0,ncol):
+            species.append(element(conf[sl,row,col]))
+
 #function that generates VASP input files
 functions.VASP_input(species,positions,s)
