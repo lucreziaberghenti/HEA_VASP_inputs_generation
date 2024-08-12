@@ -2,6 +2,7 @@ import math
 import numpy as np
 import os
 from ase.calculators.vasp import Vasp #ase is a tool used just to create input files that (not here) I run on VASP (Vienna Ab initio Simulation Package)
+from ase.build import fcc111
 
 #global variables
 a_fcc=3.6 #lattice parameter, angstrom 
@@ -95,6 +96,10 @@ def element(x):
 
 #function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
 def Coordinates(): 
+    #we are interested only in coordinates so I use Ni atoms just as en example (I could have used Fe or whatever)
+    atoms=fcc111(symbol='Ni', size=(5,4,3), a=a_fcc, vacuum=None, orthogonal=True)
+    coord=atoms.get_positions()           
+    return coord
 
 #function that checks if m2 is present in m1 (m2 has dimensions < than m1) and returns 1 if matrix is present otherwise returns 0 if not
 #in our case m1 = 4x(random conf) and m2=saved matrix
