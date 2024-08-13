@@ -7,9 +7,8 @@ import json
 
 #global variables
 a_fcc=3.6 #lattice parameter, angstrom 
-a_nn=a_fcc/math.sqrt(2) #distance between nn in xy-plane, side of equilateral triangle
-
 ncol, nrow, nslice= 5, 4, 3
+
 #np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
 n=np.array([12, 12, 12, 12, 12],dtype=int)
 n_tot=np.sum(n)
@@ -39,6 +38,9 @@ def load_pseudo_setup():
 #it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 #it returns the input files
 def VASP_input(species, positions, n):
+    #distance between nn in xy-plane, side of equilateral triangle
+    a_nn=a_fcc/math.sqrt(2) 
+
     #lattice vectors a1, a2, a3 #Angstrom
     a1=ncol*a_nn
     a2=nrow*a_nn*math.sqrt(3)/2
