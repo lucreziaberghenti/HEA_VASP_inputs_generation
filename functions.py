@@ -123,19 +123,20 @@ def Coordinates():
 #function that checks if m2 is present in m1 (m2 has dimensions < than m1) and returns 1 if matrix is present otherwise returns 0 if not
 #in our case m1 = 4x(random conf) and m2=saved matrix
 def Find(m1,m2): 
-    ncol, nrow, nslice= 5, 4, 3
+    nz, ny, nx = m2.shape
+
     #np array that will be used to sweep the bigger matrix
-    temp=np.zeros((nslice, nrow,ncol),dtype=int)
+    temp=np.zeros((nz, ny, nx),dtype=int)
     
     #loop over the increments p,m,n of then indeces nslice,nrow,ncol to sweep all the m1 matrix to find m2
-    for p in range(0, nslice):             
-        for m in range(0,nrow):
-            for n in range(0,ncol):
+    for p in range(0, nz):             
+        for m in range(0,ny):
+            for n in range(0,nx):
                 #for each pair of increments m,n
                 #create the sub-matrix temp of dimension of m2 but equal to the row+m and column+n of m1
-                for sl in range(0, nslice):
-                    for row in range(0,nrow):
-                        for col in range(0,ncol):
+                for sl in range(0, nz):
+                    for row in range(0,ny):
+                        for col in range(0,nx):
                             temp[sl,row,col]=m1[sl+p,row+m,col+n]
 
                 #check if temp is equal to m2
