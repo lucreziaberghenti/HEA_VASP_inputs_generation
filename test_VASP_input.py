@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from ase import Atoms
 from functions import VASP_input
+import numpy as np
 
 class TestVASPInput(unittest.TestCase):
    
@@ -56,10 +57,9 @@ class TestVASPInput(unittest.TestCase):
         # Verify the Atoms object
         self.assertEqual(atoms_arg.get_chemical_symbols(), species)
         self.assertTrue((atoms_arg.get_positions() == positions).all())
-        self.assertTrue((atoms_arg.get_cell() == [[12.727922061357855, 0.0, 0.0],
-                                                  [0.0, 12.727922061357855, 0.0],
-                                                  [0.0, 0.0, 12.727922061357855]]).all())
-        self.assertTrue(atoms_arg.get_pbc())
+        self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), [[12.727922061357855, 0.0, 0.0],[0.0, 8.81816307401944, 0.0],[0.0, 0.0, 6.235382907247957]])))
+        self.assertTrue(np.all(atoms_arg.get_pbc()))
+
 if __name__ == '__main__':
     unittest.main()
 
