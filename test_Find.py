@@ -58,12 +58,6 @@ class TestFindFunction(unittest.TestCase):
         result = Find(m1, m2)
         self.assertEqual(result, 0)
     
-    def test_find_empty_m1(self):
-        # Edge case: m1 is an empty matrix
-        m1 = np.array([[]])
-        m2 = np.array([[[2, 2],
-                        [2, 2]]])
-    
 #if the file is correctly executed then tests are executed
 if __name__ == '__main__':
     unittest.main()
