@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+from functions import Big_conf
 
 class TestBigConf(unittest.TestCase):
     # Test with a 1x1x1 matrix
