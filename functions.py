@@ -3,6 +3,7 @@ import numpy as np
 import os
 from ase.calculators.vasp import Vasp #ase is a tool used just to create input files that (not here) I run on VASP (Vienna Ab initio Simulation Package)
 from ase.build import fcc111
+import json
 
 #global variables
 a_fcc=3.6 #lattice parameter, angstrom 
@@ -13,6 +14,12 @@ ncol, nrow, nslice= 5, 4, 3
 n=np.array([12, 12, 12, 12, 12],dtype=int)
 n_tot=np.sum(n)
 
+#function that reads INCAR parameters written by the user
+def load_incar_settings():
+    file_path='./incar_settings.json'
+    with open(file_path, 'r') as file:
+        incar_settings = json.load(file)
+    return incar_settings
 
 #function that creates all the VASP input files using ase.calculators.vasp
 #it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
@@ -27,20 +34,7 @@ def VASP_input(species, positions, n):
     
     #Now define the settings for VASP
     #settings for the INCAR file. The flags must be in lowercase.This dictionary can be empty
-    incar_settings = {
-        'istart': 0,
-        'icharg':2,
-        'encut': 400,
-        'algo': 'Normal',
-        'nelm': 60,
-        'ediff': 1E-06,
-        'ismear': 1,
-        'sigma': 0.1,
-        'ispin': 2,
-        'ediffg': -5E-02,
-        'nsw': 20,
-        'ibrion': 1,
-    }
+    incar_settings = load_incar_settings()
 
     #settings for the KPOINTS file
     kpoints_settings = {
