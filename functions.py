@@ -5,14 +5,6 @@ from ase.calculators.vasp import Vasp #ase is a tool used just to create input f
 from ase.build import fcc111
 import json
 
-#global variables
-a_fcc=3.6 #lattice parameter, angstrom 
-ncol, nrow, nslice= 5, 4, 3
-
-#np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
-n=np.array([12, 12, 12, 12, 12],dtype=int)
-n_tot=np.sum(n)
-
 #function that reads INCAR parameters written by the user
 def load_incar_settings():
     file_path='./incar_settings.json'
@@ -38,6 +30,10 @@ def load_pseudo_setup():
 #it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 #it returns the input files
 def VASP_input(species, positions, n):
+    ncol, nrow, nslice= 5, 4, 3
+
+    #lattice parameter, angstrom 
+    a_fcc=3.6 
     #distance between nn in xy-plane, side of equilateral triangle
     a_nn=a_fcc/math.sqrt(2) 
 
@@ -116,14 +112,18 @@ def Generate_species(conf):
 
 #function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
 def Coordinates(): 
+    ncol, nrow, nslice= 5, 4, 3
+    #lattice parameter, angstrom 
+    a_fcc=3.6 
     #we are interested only in coordinates so I use Ni atoms just as en example (I could have used Fe or whatever)
-    atoms=fcc111(symbol='Ni', size=(5,4,3), a=a_fcc, vacuum=None, orthogonal=True)
+    atoms=fcc111(symbol='Ni', size=(ncol, nrow, nslice), a=a_fcc, vacuum=None, orthogonal=True)
     coord=atoms.get_positions()           
     return coord
 
 #function that checks if m2 is present in m1 (m2 has dimensions < than m1) and returns 1 if matrix is present otherwise returns 0 if not
 #in our case m1 = 4x(random conf) and m2=saved matrix
 def Find(m1,m2): 
+    ncol, nrow, nslice= 5, 4, 3
     #np array that will be used to sweep the bigger matrix
     temp=np.zeros((nslice, nrow,ncol),dtype=int)
     
@@ -145,6 +145,8 @@ def Find(m1,m2):
 
 #function that takes as input a conf of dim (nslice,nrow,ncol) and returns a matrix 8-times bigger
 def Big_conf(conf):
+    ncol, nrow, nslice= 5, 4, 3
+
     #dimensions of 8x conf matrix 
     Nslice=2*nslice
     Nrow=2*nrow
@@ -206,6 +208,11 @@ def Equivalent(conf, saved):
 
 #function that generates a new random configuration non-equivalent to the ones in saved
 def newConf(saved):
+    ncol, nrow, nslice= 5, 4, 3
+    #np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
+    n=np.array([12, 12, 12, 12, 12],dtype=int)
+    n_tot=np.sum(n)
+
     #variable that iterates the loop if an equivalent configuration is generated (and consequently discarded)
     #set to zero when successfully generate a new conf inequivalent to the ones saved
     repeat=1
