@@ -22,13 +22,15 @@ def load_incar_settings():
     return incar_settings
 
 #function that reads KPOINTS parameters written by the user
-def load_kpoints_settings(file_path):
+def load_kpoints_settings():
+    file_path='./kpoints_settings.json'
     with open(file_path, 'r') as file:
         kpoints_settings = json.load(file)
     return kpoints_settings
 
 #function that reads pseudopotentials parameters written by the user
-def load_pseudo_setup(file_path):
+def load_pseudo_setup():
+    file_path='./pseudo_setup.json'
     with open(file_path, 'r') as file:
         pseudo_setup = json.load(file)
     return pseudo_setup
@@ -49,13 +51,10 @@ def VASP_input(species, positions, n):
     incar_settings = load_incar_settings()
 
     #settings for the KPOINTS file
-    kpoints_settings = {
-        'kpts': (2, 3, 4), # grid
-        'gamma': True     
-    }
-    
+    kpoints_settings = load_kpoints_settings()
+
     #setup for pseudopotentials
-    pseudo_setup = {'base': 'recommended'}
+    pseudo_setup = load_pseudo_setup()
 
     #directory where the input files will be written, the input files of the nth conf are saved in "conf_n"
     name='conf_'+str(n)
