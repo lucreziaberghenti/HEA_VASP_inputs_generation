@@ -144,25 +144,25 @@ def Find(m1,m2):
                     return 1
     return 0      
 
-#function that takes as input a conf of dim (nslice,nrow,ncol) and returns a matrix 8-times bigger
+#function that takes as input a conf of dim (nz,ny,nx) and returns a matrix 8-times bigger
 def Big_conf(conf):
-    ncol, nrow, nslice= 5, 4, 3
+    nz, ny, nx = conf.shape
 
     #dimensions of 8x conf matrix 
-    Nslice=2*nslice
-    Nrow=2*nrow
-    Ncol=2*ncol
+    Nslice=2*nz
+    Nrow=2*ny
+    Ncol=2*nx
 
     #inizitialize big_conf initially doubling only in the xy-plane
-    big_conf=np.zeros((nslice,Nrow,Ncol),dtype=int)
+    big_conf=np.zeros((nz,Nrow,Ncol),dtype=int)
 
-    for sl in range(0,nslice):
+    for sl in range(0,nz):
         #rows of big_conf obtained by concatenating conf rows with itself
-        for row in range(0,nrow):
+        for row in range(0,ny):
             big_conf[sl,row]=np.concatenate((conf[sl,row],conf[sl,row]))
         #analogous for columns
         for col in range(0,Ncol):
-            big_conf[sl,:,col]=np.concatenate((conf[sl,:,(col%ncol)],conf[sl,:,(col%ncol)]))   #%ncol modulo ncol because conf has half columns of new_conf
+            big_conf[sl,:,col]=np.concatenate((conf[sl,:,(col%nx)],conf[sl,:,(col%nx)]))   #%ncol modulo ncol because conf has half columns of new_conf
 
     #now I have doubled only in xy dimensions by concatenating rows and columns, big_conf has dim: (3,8,10)
     #concatenate big_conf with itself to double also along z

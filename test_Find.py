@@ -14,10 +14,10 @@ class TestFindFunction(unittest.TestCase):
                        [[1, 4, 2, 4],
                         [1, 3, 5, 1],
                         [5, 4, 3, 3],
-                        [5, 1, 5, 2]]])
+                        [5, 1, 5, 2]]], dtype=int)
         
         m2 = np.array([[[1, 2],
-                        [4, 1]]])
+                        [4, 1]]], dtype=int)
         
         result = Find(m1, m2)
         self.assertEqual(result, 1)
@@ -32,10 +32,10 @@ class TestFindFunction(unittest.TestCase):
                        [[1, 4, 2, 4],
                         [1, 3, 5, 1],
                         [5, 4, 3, 3],
-                        [5, 1, 5, 2]]])
+                        [5, 1, 5, 2]]], dtype=int)
         
         m2 = np.array([[[2, 2],
-                        [2, 2]]])
+                        [2, 2]]], dtype=int)
         
         result = Find(m1, m2)
         self.assertEqual(result, 0)
@@ -51,9 +51,9 @@ class TestFindFunction(unittest.TestCase):
                        [[1, 4, 2, 4],
                         [1, 3, 5, 1],
                         [5, 4, 3, 3],
-                        [5, 1, 5, 2]]])
+                        [5, 1, 5, 2]]], dtype=int)
         
-        m2 = np.array([[[ ]]])
+        m2 = np.array([[[ ]]], dtype=int)
         
         result = Find(m1, m2)
         self.assertEqual(result, 0)
