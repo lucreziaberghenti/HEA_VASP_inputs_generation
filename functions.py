@@ -21,6 +21,18 @@ def load_incar_settings():
         incar_settings = json.load(file)
     return incar_settings
 
+#function that reads KPOINTS parameters written by the user
+def load_kpoints_settings(file_path):
+    with open(file_path, 'r') as file:
+        kpoints_settings = json.load(file)
+    return kpoints_settings
+
+#function that reads pseudopotentials parameters written by the user
+def load_pseudo_setup(file_path):
+    with open(file_path, 'r') as file:
+        pseudo_setup = json.load(file)
+    return pseudo_setup
+
 #function that creates all the VASP input files using ase.calculators.vasp
 #it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 #it returns the input files
