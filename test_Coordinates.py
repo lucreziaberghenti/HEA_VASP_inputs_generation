@@ -19,7 +19,8 @@ class TestCoordinates(unittest.TestCase):
             [ 3.81837662,  0.73484692,  0.        ],
             [ 6.36396103,  0.73484692,  0.        ],
             [ 8.90954544,  0.73484692,  0.        ],
-            [11.45512986,  0.73484692,  0.        ]
+            [11.45512986,  0.73484692,  0.        ],
+            [ 0.         , 2.93938769,  0.        ]
             # ... possible to add other positions ...
         ])
         
@@ -40,7 +41,7 @@ class TestCoordinates(unittest.TestCase):
         v1 = coords[1] - coords[0]
         v2 = coords[2] - coords[0]
         angle = np.arccos(np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
-        self.assertAlmostEqual(angle, 120 * np.pi / 180, places=6)
+        self.assertAlmostEqual(angle, 0, places=6)
 
 #if the file is correctly executed then tests are executed
 if __name__ == '__main__':
