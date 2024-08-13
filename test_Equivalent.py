@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+from functions import Equivalent
 
 class TestEquivalent(unittest.TestCase):
 
@@ -7,8 +8,7 @@ class TestEquivalent(unittest.TestCase):
     def test_equivalent_identical(self):
         
         conf = np.array([[[1, 2], [3, 4]], [[1, 2], [3, 4]]], dtype=int)
-        saved = np.array([
-            [[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
+        saved = np.array([[[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
 
         self.assertEqual(Equivalent(conf, saved), 1)
 
@@ -16,8 +16,7 @@ class TestEquivalent(unittest.TestCase):
     def test_equivalent_different(self):
         
         conf = np.array([[[1, 2], [3, 4]], [[1, 2], [3, 5]]], dtype=int)
-        saved = np.array([
-            [[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
+        saved = np.array([[[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
 
         self.assertEqual(Equivalent(conf, saved), 0)
 
@@ -33,8 +32,7 @@ class TestEquivalent(unittest.TestCase):
     def test_equivalent_equivalent_transformation(self):
         
         conf = np.array([[[3, 4], [1, 2]], [[3, 4], [1, 2]]], dtype=int)
-        saved = np.array([
-            [[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
+        saved = np.array([[[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
         
         self.assertEqual(Equivalent(conf, saved), 1)
 

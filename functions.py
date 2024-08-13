@@ -190,7 +190,7 @@ def Equivalent(conf, saved):
         copy=0
 
         #loop on the saved matrices to find if an equivalent matrix is already present
-        for m in np.nditer(saved):
+        for m in saved:
             #if an equivalent matrix is present
             if Find(big_conf,m):
                 #print("an equivalent matrix is already present!\n")
