@@ -62,4 +62,4 @@ The `POTCAR` file contains information on the geometry of the system, and it can
 
 Here is an example of the generated unit cell.
 
-![Unit Cell Image] (./images/unit_cell.png)
+![Unit Cell Image] (./unit_cell.png)

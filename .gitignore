@@ -123,5 +123,5 @@ venv.bak/
 conf_*
 saved.npy
 
-#directory of images
-./images
+#image files
+*.png
