@@ -61,3 +61,5 @@ The output of the code is a folder named `conf_n`, where `n` is the nth configur
 The `POTCAR` file contains information on the geometry of the system, and it can be visualized using VESTA, a 3D visualization program for structural models, volumetric data such as electron/nuclear densities, and crystal morphologies.
 
 Here is an example of the generated unit cell.
+![Unit Cell Image]
+(unit_cell.png)
