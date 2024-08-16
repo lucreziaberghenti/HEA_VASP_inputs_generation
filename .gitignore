@@ -122,3 +122,6 @@ venv.bak/
 #outputs obtained by running the code
 conf_*
 saved.npy
+
+#directory of images
+images
