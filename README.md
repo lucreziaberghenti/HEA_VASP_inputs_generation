@@ -16,5 +16,7 @@ The user has to first download the .zip folder and install the two python librar
 
 Then the user can choose the input parameters by modifying the files: <incar_settings.json>, <kpoints_settings.json> and <pseudo_setup.json>.
 
+
+
 ## The code
 ## Results
