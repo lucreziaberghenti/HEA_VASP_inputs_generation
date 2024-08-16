@@ -25,7 +25,7 @@ Eventually, the user has just to run main.py using the command python main.py.
 The code is structured into blocks:
 - The file main.py which is the core script that calls the functions necessary to generate a new configuration, saves it if inequivalent and outputs the input files;
 - the file functions.py that contains all functions used by main.py;
-- the files 'test_(name of the function).py' that test all the functions present in the file functions.py;
+- the folder 'tests' which contains all the tests on the functions present in the file functions.py (to run a test use the command python -m unittest tets/file_name.py);
 - the .json files where the user can modify the INCAR, KPOINS and pseudopotentials settings;
 - the folder 'ase_pseudo' which contains the pseudopotentials stored in POTCAR files for each element necessary to write VASP input files.
 
