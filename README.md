@@ -1,36 +1,63 @@
-# Software_and_Computing
-## Table of content 
-- Abstract
-- How to
-- The code 
-- Results
+# Software and Computing
+
+## Table of Contents
+- [Abstract](#abstract)
+- [How to Use](#how-to-use)
+- [The Code Structure](#the-code-structure)
+- [Results](#results)
+
 ## Abstract
-High entropy alloys (HEAs) are loosely defined as solid solution alloys that contain more than five principal elements in equal or nearly equal atomic percent (at. %). 
-Here we consider the Cantor Alloy, CoCrFeMnNi, with a single fcc-phase. The unit cell has dimensions (x,y,z)=(5x4x3), meaning that it is composed by 3 planes along z of 20 atoms each, for a total of 60 atoms. Since the elements Cr, Mn, Fe, Co, Ni have the same concentration, we have 12 atoms for each element in the unit cell.
-The lattice parameter is 3.6 Å.
+High entropy alloys (HEAs) are loosely defined as solid solution alloys that contain more than five principal elements in equal or nearly equal atomic percent (at.%). Here we consider the Cantor Alloy, CoCrFeMnNi, with a single FCC-phase. The unit cell has dimensions of (x, y, z) = (5x4x3), meaning that it is composed of 3 planes along the z-axis, each containing 20 atoms, for a total of 60 atoms. Since the elements Cr, Mn, Fe, Co, and Ni have the same concentration, there are 12 atoms for each element in the unit cell. The lattice parameter is 3.6 Å.
 
-The code generates random configurations of the bulk-fcc unit cell by permutation of the positions of different elements atoms in the lattice. The new configuration is saved in the np array saved.npy only if it is not equivalent to the ones already saved (otherwise it generates another configuration until it finds a non-equivalent one). Two configurations are equivalent if their unit cells periodically repeated in 3-dim space generate the same lattice.
+This code generates random configurations of the bulk-FCC unit cell by permuting the positions of different element atoms in the lattice. A new configuration is saved in the numpy array `saved.npy` only if it is not equivalent to the ones already saved. If the configuration is equivalent to any existing configuration, the code generates another configuration until a non-equivalent one is found. Two configurations are considered equivalent if their unit cells, when periodically repeated in 3D space, generate the same lattice.
 
-Each time the code is executed, it creates the input files: INCAR, POSCAR, POTCAR, KPOINTS for VASP (Vienna Ab initio Simulation Package) relaxation calculations of the new configuration.
+Each time the code is executed, it creates the input files: `INCAR`, `POSCAR`, `POTCAR`, and `KPOINTS` for VASP (Vienna Ab initio Simulation Package) relaxation calculations of the new configuration.
 
-## How to
-The user has to first download the .zip folder and install the two python libraries used in the script: numpy and python ase. The installation of the packages can be done via pip (pip install package name) or, if a conda environment is used, using the command conda install package name.
+## How to Use
+1. **Download and Installation:**
+   - First, download the `.zip` folder containing the code.
+   - Install the required Python libraries: `numpy` and `python-ase`. You can install these packages using pip:
+     ```
+     pip install numpy ase
+     ```
+     Alternatively, if you are using a conda environment, use:
+     ```
+     conda install numpy ase
+     ```
 
-Then the user can choose the input parameters by modifying the files: incar_settings.json, kpoints_settings.json and pseudo_setup.json.
+2. **Configuration:**
+   - Adjust the input parameters by modifying the following files in the `settings` folder:
+     - `incar_settings.json`
+     - `kpoints_settings.json`
+     - `pseudo_setup.json`
 
-Eventually, the user has just to run main.py using the command python main.py.
+3. **Execution:**
+   - Run the main script by executing the following command:
+     ```
+     python main.py
+     ```
 
+## The Code Structure
+The code is organized into the following components:
 
-## The code
-The code is structured into blocks:
-- The file main.py which is the core script that calls the functions necessary to generate a new configuration, saves it if inequivalent and outputs the input files;
-- the file functions.py that contains all functions used by main.py;
-- the folder 'tests' which contains all the tests on the functions present in the file functions.py (to run a test use the command python -m unittest tets/file_name.py);
-- the folder 'settings' which contains .json files used by the user to modify the INCAR, KPOINS and pseudopotentials settings;
-- the folder 'ase_pseudo' which contains the pseudopotentials stored in POTCAR files for each element necessary to write VASP input files.
+- **`main.py`:** The core script that calls the necessary functions to generate a new configuration, saves it if it is inequivalent, and outputs the input files.
+- **`functions.py`:** Contains all the functions that are used by `main.py`.
+- **`tests/`:** A folder containing tests for the functions present in `functions.py`. To run a test, use the command:
+     ```
+     python -m unittest tests/file_name.py
+     ```
+
+- **`settings/`:** A folder containing the `.json` files that the user can modify to adjust the INCAR, KPOINTS, and pseudopotentials settings.
+- **`ase_pseudo/`:** A folder containing the pseudopotentials stored in POTCAR files for each element, necessary for writing VASP input files.
 
 ## Results
-The output of the code is a folder named 'conf_n', where n is the number of the nth configurationis generated, cointainig the input files: POSCAR, POTCAR, KPOINTS, INCAR.
+The output of the code is a folder named `conf_n`, where `n` is the nth configuration generated. This folder contains the following input files:
 
-The POTCAR file contains information on the geometry of the system and it can be visualized with VESTA, a 3D visualization program for structural models, volumetric data such as electron/nuclear densities, and crystal morphologies.
-Here an example of the generated unit cell.
+- `POSCAR`
+- `POTCAR`
+- `KPOINTS`
+- `INCAR`
+
+The `POTCAR` file contains information on the geometry of the system, and it can be visualized using VESTA, a 3D visualization program for structural models, volumetric data such as electron/nuclear densities, and crystal morphologies.
+
+Here is an example of the generated unit cell.
