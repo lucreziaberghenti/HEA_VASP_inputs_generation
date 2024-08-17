@@ -6,7 +6,7 @@ class Test_Element_Function(unittest.TestCase):
 
         print("running test...")
 
-        #test of correct cases
+        # test of correct cases
         self.assertEqual(element(1),'Co')
 
         self.assertEqual(element(2),'Cr')
@@ -17,7 +17,7 @@ class Test_Element_Function(unittest.TestCase):
 
         self.assertEqual(element(5),'Ni')
 
-        #test of input of element function outside of the range 1:5
+        # test of input of element function outside of the range 1:5
         self.assertEqual(element(0),'error')
 
         self.assertEqual(element(6),'error')
@@ -25,6 +25,6 @@ class Test_Element_Function(unittest.TestCase):
         self.assertEqual(element(-10),'error')
 
 
-#if the file is correctly executed then tests are executed
+# if the file is correctly executed then tests are executed
 if __name__ == '__main__':
     unittest.main()

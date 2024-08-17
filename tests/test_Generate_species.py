@@ -5,6 +5,7 @@ from functions import Generate_species
 class TestGenerateSpeciesFunction(unittest.TestCase):
 
     def test_generate_species(self):
+
         #Test with matrix 2x2x2 having values from 1 to 5
         conf = np.array([
             [[1, 2], [3, 4]],
@@ -38,6 +39,6 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
         expected_output = ['error']
         self.assertEqual(Generate_species(conf), expected_output)
 
-#if the file is correctly executed then tests are executed
+# if the file is correctly executed then tests are executed
 if __name__ == '__main__':
     unittest.main()
