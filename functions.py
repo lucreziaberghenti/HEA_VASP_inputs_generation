@@ -7,6 +7,12 @@ import json
 
 # function that reads INCAR parameters written by the user
 def load_incar_settings():
+    """
+    Reads INCAR parameters from a JSON file.
+
+    Returns:
+    incar_settings (dict): A dictionary containing the INCAR settings.
+    """
     file_path='./settings/incar_settings.json'
     with open(file_path, 'r') as file:
         incar_settings = json.load(file)
@@ -14,6 +20,12 @@ def load_incar_settings():
 
 # function that reads KPOINTS parameters written by the user
 def load_kpoints_settings():
+    """
+    Reads KPOINTS parameters from a JSON file.
+
+    Returns:
+    kpoints_settings (dict): A dictionary containing the KPOINTS settings.
+    """
     file_path='./settings/kpoints_settings.json'
     with open(file_path, 'r') as file:
         kpoints_settings = json.load(file)
@@ -21,6 +33,12 @@ def load_kpoints_settings():
 
 # function that reads pseudopotentials parameters written by the user
 def load_pseudo_setup():
+    """
+    Reads pseudopotentials parameters from a JSON file.
+
+    Returns:
+    pseudo_setup (dict): A dictionary containing the pseudopotentials setup.
+    """
     file_path='./settings/pseudo_setup.json'
     with open(file_path, 'r') as file:
         pseudo_setup = json.load(file)
@@ -30,6 +48,17 @@ def load_pseudo_setup():
 # it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 # it returns the input files
 def VASP_input(species, positions, n):
+    """
+    Creates VASP input files using ase.calculators.vasp.
+
+    Args:
+    species (list): List of chemical species of atoms.
+    positions (list): List of positions of atoms.
+    n (int): Number of the configuration generated.
+
+    Returns:
+    None
+    """
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
@@ -84,6 +113,15 @@ def VASP_input(species, positions, n):
 
 # for simplicity when new conf is generated we use numbers, then the following function translates from numbers to elements
 def element(x):
+    """
+    Translates a number to an element symbol.
+
+    Args:
+    x (int): Number representing an element.
+
+    Returns:
+    element (str): Element symbol.
+    """
     if x==1:
         return 'Co'
     if x==2:
@@ -100,6 +138,15 @@ def element(x):
 # function that given as input a (nslice,nrow,ncol) matrix of elements 1,2,3,4,5 returns the corresponding list of elements 
 # the index of each element in the list is associated to a certain position (slice,row,col) in the matrix   
 def Generate_species(conf):
+    """
+    Generates a list of chemical species from a matrix of elements.
+
+    Args:
+    conf (ndarray): Matrix of elements.
+
+    Returns:
+    species (list): List of chemical species.
+    """
     species=[]
     nz, ny, nx = conf.shape
 
@@ -112,6 +159,12 @@ def Generate_species(conf):
 
 # function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
 def Coordinates(): 
+    """
+    Generates a numpy array of lattice coordinates for a (111)-fcc lattice.
+
+    Returns:
+    coord (ndarray): Array of lattice coordinates.
+    """
     ncol, nrow, nslice= 5, 4, 3
     # lattice parameter, angstrom 
     a_fcc=3.6 
@@ -123,6 +176,16 @@ def Coordinates():
 # function that checks if m2 is present in m1 (m2 has dimensions < than m1) and returns 1 if matrix is present otherwise returns 0 if not
 # in our case, when I call this function in the code, it will be: m1 = 4x(random conf) and m2=saved matrix
 def Find(m1,m2): 
+    """
+    Checks if a matrix is present in another matrix.
+
+    Args:
+    m1 (ndarray): Matrix to be searched.
+    m2 (ndarray): Matrix to search for.
+
+    Returns:
+    result (int): 1 if m2 is present in m1, 0 otherwise.
+    """
     nz, ny, nx = m2.shape
 
     # np array that will be used to sweep the bigger matrix
@@ -146,6 +209,15 @@ def Find(m1,m2):
 
 # function that takes as input a conf of dim (nz,ny,nx) and returns a matrix 8-times bigger
 def Big_conf(conf):
+    """
+    Generates a matrix that is 8 times bigger than the input matrix.
+
+    Args:
+    conf (ndarray): Input matrix.
+
+    Returns:
+    big_conf (ndarray): Matrix that is 8 times bigger than the input matrix.
+    """
     nz, ny, nx = conf.shape
 
     #dimensions of 8x conf matrix 
@@ -172,6 +244,16 @@ def Big_conf(conf):
 # functions that checks if conf matrix is equivalent to one of the matrices of saved
 # returns 1 if matrices are equivalent, otherwise it returns 0
 def Equivalent(conf, saved):
+    """
+    Checks if a matrix is equivalent to any of the matrices in a list.
+
+    Args:
+    conf (ndarray): Matrix to be checked.
+    saved (list): List of matrices to compare with.
+
+    Returns:
+    repeat (int): 1 if an equivalent matrix is found, 0 otherwise.
+    """
     # repeat is 1 unless a non-equivalent new conf is generated
     repeat=1
     big_conf=Big_conf(conf)
@@ -207,6 +289,15 @@ def Equivalent(conf, saved):
 
 # function that generates a new random configuration non-equivalent to the ones in saved
 def newConf(saved):
+    """
+    Generates a new random configuration that is non-equivalent to the ones in a list.
+
+    Args:
+    saved (list): List of saved matrices.
+
+    Returns:
+    conf (ndarray): New random configuration.
+    """
     ncol, nrow, nslice= 5, 4, 3
     # np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
     n=np.array([12, 12, 12, 12, 12],dtype=int)
