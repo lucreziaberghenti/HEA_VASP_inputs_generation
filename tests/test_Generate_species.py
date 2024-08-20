@@ -3,10 +3,16 @@ import numpy as np
 from functions import Generate_species
 
 class TestGenerateSpeciesFunction(unittest.TestCase):
+    """
+    Unit test class for the Generate_species function.
+    """
 
     def test_generate_species(self):
+        """
+        Test the Generate_species function with various configurations of matrices.
+        """
 
-        #Test with matrix 2x2x2 having values from 1 to 5
+        # Test with a 2x2x2 matrix having values from 1 to 5
         conf = np.array([
             [[1, 2], [3, 4]],
             [[5, 1], [2, 3]]
@@ -15,15 +21,15 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
         expected_output = ['Co', 'Cr', 'Fe', 'Mn', 'Ni', 'Co', 'Cr', 'Fe']
         self.assertEqual(Generate_species(conf), expected_output)
 
-        #Test with matrix 1x2x2 having values from 1 to 3
+        # Test with a 1x2x2 matrix having values from 1 to 3
         conf = np.array([
             [[1, 2], [3, 1]]
         ], dtype=int)
 
         expected_output = ['Co', 'Cr', 'Fe', 'Co']
         self.assertEqual(Generate_species(conf), expected_output)
-        
-        # Test with a matrix 1x1x1 having only one value
+       
+        # Test with a 1x1x1 matrix having only one value
         conf = np.array([
             [[5]]
         ], dtype=int)
@@ -31,7 +37,7 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
         expected_output = ['Ni']
         self.assertEqual(Generate_species(conf), expected_output)
 
-        #Test with non mapped values
+        # Test with a matrix containing non-mapped values
         conf = np.array([
             [[0]]
         ], dtype=int)
