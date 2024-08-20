@@ -2,7 +2,16 @@ import unittest
 from functions import element
 
 class Test_Element_Function(unittest.TestCase):
+    """
+    Unit test class for the Element function.
+    """
+
     def test_element(self):
+        """
+        Test if the Element function returns:
+        - the correct element corresponding to input in the range 1:5
+        - 'error' if the input is outside the range 1:5
+        """
 
         print("running test...")
 
