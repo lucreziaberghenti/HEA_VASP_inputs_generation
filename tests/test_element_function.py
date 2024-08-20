@@ -1,7 +1,7 @@
 import unittest
 from functions import element
 
-class Test_Element_Function(unittest.TestCase):
+class TestElementFunction(unittest.TestCase):
     """
     Unit test class for the Element function.
     """
