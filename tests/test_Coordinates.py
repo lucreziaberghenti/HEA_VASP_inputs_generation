@@ -41,7 +41,9 @@ class TestCoordinates(unittest.TestCase):
         and the angle between base vectors.
         """
         coords = Coordinates()
-        d = np.linalg.norm(coords[0] - coords[1])  # Distance between nearest neighbors
+
+        # Test the distance between nearest neighbors
+        d = np.linalg.norm(coords[0] - coords[1])  
         expected_d = 3.6 / np.sqrt(2)
         self.assertAlmostEqual(d, expected_d, places=6)
 
