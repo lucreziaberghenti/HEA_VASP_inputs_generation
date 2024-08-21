@@ -13,12 +13,10 @@ class TestVASPInput(unittest.TestCase):
     @patch('functions.load_incar_settings')
     @patch('functions.load_kpoints_settings')
     @patch('functions.load_pseudo_setup')
-    @patch('functions.load_alat') 
     @patch('functions.os')
     @patch('functions.Vasp')
     
-    def test_vasp_input(self, mock_vasp, mock_os, mock_load_alat,
-                        mock_load_pseudo_setup, mock_load_kpoints_settings, mock_load_incar_settings):
+    def test_vasp_input(self, mock_vasp, mock_os, mock_load_pseudo_setup, mock_load_kpoints_settings, mock_load_incar_settings):
         """
         Test case for the VASP_input function. It checks the following:
         1. That the correct INCAR, KPOINTS, and POTCAR settings are loaded.
@@ -38,8 +36,7 @@ class TestVASPInput(unittest.TestCase):
             'kpts': [2, 3, 4], 'gamma': True
         }
         mock_load_pseudo_setup.return_value = {'base': 'recommended'}
-        mock_load_alat.return_value = {'a': 3.6} # Mock il valore di alat
-       
+               
         # mock the environment variable
         mock_os.environ = {}
        
@@ -87,15 +84,9 @@ class TestVASPInput(unittest.TestCase):
         self.assertEqual(atoms_arg.get_chemical_symbols(), species)
         self.assertTrue((atoms_arg.get_positions() == positions).all())
        
-        # calculate cell using 'alat'
-        alat = 3.6
-        a_nn=alat/np.sqrt(2)
-        expected_cell = np.array([
-            [5*a_nn, 0.0, 0.0],
-            [0.0, alat * 4*a_nn*np.sqrt(3)/2, 0.0],
-            [0.0, 0.0, 3*a_nn*np.sqrt(6)/3]
-        ])
-        self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), expected_cell)))
+        self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), [[12.727922061357855, 0.0, 0.0],
+                                                                 [0.0, 8.81816307401944, 0.0],
+                                                                 [0.0, 0.0, 6.235382907247957]])))
         self.assertTrue(np.all(atoms_arg.get_pbc()))
 
 # If the file is correctly executed, then tests are executed

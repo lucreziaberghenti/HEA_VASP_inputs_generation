@@ -54,17 +54,6 @@ def load_pseudo_setup():
     pseudo_setup = settings.get('pseudo_setup', {})
     return pseudo_setup
 
-# function that loads alat from settings.json file
-def load_alat():
-    """
-    Extracts the lattice parameter 'a' from the settings dictionary.
-    
-    Returns:
-    alat (float): The lattice parameter 'a'.
-    """
-    settings = load_settings()
-    alat = settings.get('alat', {}).get('a', None) # Ritorna None se 'a' non è presente
-    return alat
 
 # function that creates all the VASP input files using ase.calculators.vasp
 # it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
@@ -84,7 +73,7 @@ def VASP_input(species, positions, n):
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
-    a_fcc= load_alat() 
+    a_fcc= 3.6 
     # distance between nn in xy-plane, side of equilateral triangle
     a_nn=a_fcc/math.sqrt(2) 
 
@@ -189,7 +178,7 @@ def Coordinates():
     """
     ncol, nrow, nslice= 5, 4, 3
     # lattice parameter, angstrom 
-    a_fcc= load_alat()
+    a_fcc= 3.6
     # we are interested only in coordinates, so I use Ni atoms just as en example (I could have used Fe or whatever)
     atoms=fcc111(symbol='Ni', size=(ncol, nrow, nslice), a=a_fcc, vacuum=None, orthogonal=True)
     coord=atoms.get_positions()           

@@ -1,8 +1,4 @@
 {
-    "alat":{
-        "a": 3.6
-    },
-    
     "incar_settings":{
         "istart": 0,
         "icharg": 2,
