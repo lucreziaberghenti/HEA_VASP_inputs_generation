@@ -7,7 +7,7 @@
 - [Results](#results)
 
 ## Abstract
-High entropy alloys (HEAs) are loosely defined as solid solution alloys that contain more than five principal elements in equal or nearly equal atomic percent (at.%). Here we consider the Cantor Alloy, CoCrFeMnNi, with a single fcc-phase. The unit cell has dimensions of (x, y, z) = (5x4x3), meaning that it is composed of 3 planes along the z-axis, each containing 20 atoms, for a total of 60 atoms. Since the elements Cr, Mn, Fe, Co, and Ni have the same concentration, there are 12 atoms for each element in the unit cell.  The lattice parameter is 3.6 Å.
+High entropy alloys (HEAs) are loosely defined as solid solution alloys that contain more than five principal elements in equal or nearly equal atomic percent (at.%). Here we consider the Cantor Alloy, CoCrFeMnNi, with a single fcc-phase. The unit cell has dimensions of (x, y, z) = (5x4x3), meaning that it is composed of 3 planes along the z-axis, each containing 20 atoms, for a total of 60 atoms. Since the elements Cr, Mn, Fe, Co, and Ni have the same concentration, there are 12 atoms for each element in the unit cell.  
 
 This code generates random configurations of the bulk-FCC unit cell by permuting the positions of different element atoms in the lattice. A new configuration is saved in the numpy array `saved.npy` only if it is not equivalent to the ones already saved. If the configuration is equivalent to any existing configuration, the code generates another configuration until a non-equivalent one is found. Two configurations are considered equivalent if their unit cells, when periodically repeated in 3D space, generate the same lattice.
 
@@ -27,6 +27,7 @@ Each time the code is executed, it creates the input files: `INCAR`, `POSCAR`, `
 
 2. **Configuration:**
    - Modify the input parameters by modifying the following files in the `settings.json` file:
+     - `alat`
      - `incar_settings`
      - `kpoints_settings`
      - `pseudo_setup`
@@ -46,8 +47,7 @@ The code is organized into the following components:
      ```
      python -m unittest tests/file_name.py
      ```
-
-- **`settings.json/`:** A dictionary of the parameters that the user can modify of INCAR, KPOINTS, and pseudopotentials.
+- **`settings.json/`:** A dictionary of the parameters that the user can modify: lattice parameter (alat) and INCAR, KPOINTS, and pseudopotentials settings.
 - **`ase_pseudo/`:** A folder containing the pseudopotentials stored in POTCAR files for each element, necessary for writing VASP input files.
 
 ## Results
