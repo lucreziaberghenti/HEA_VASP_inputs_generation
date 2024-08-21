@@ -1,0 +1,29 @@
+{
+    "alat":{
+        "a": 3.6
+    },
+    
+    "incar_settings":{
+        "istart": 0,
+        "icharg": 2,
+        "encut": 400,
+        "algo": "Normal",
+        "nelm": 60,
+        "ediff": 1E-06,
+        "ismear": 1,
+        "sigma": 0.1,
+        "ispin": 2,
+        "ediffg": -5E-02,
+        "nsw": 20,
+        "ibrion": 1
+    },
+
+    "kpoints_settings":{
+        "kpts": [2, 3, 4],
+        "gamma": true
+    },
+
+    "pseudo_setup":{
+        "base": "recommended"
+    }
+}
