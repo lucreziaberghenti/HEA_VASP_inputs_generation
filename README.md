@@ -1,4 +1,4 @@
-# Software and Computing
+# HEA VASP input generation
 
 ## Table of Contents
 - [Abstract](#abstract)
