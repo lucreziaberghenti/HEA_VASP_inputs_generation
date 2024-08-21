@@ -13,12 +13,12 @@ class TestVASPInput(unittest.TestCase):
     @patch('functions.load_incar_settings')
     @patch('functions.load_kpoints_settings')
     @patch('functions.load_pseudo_setup')
+    @patch('functions.load_alat') 
     @patch('functions.os')
     @patch('functions.Vasp')
-
     
-    def test_vasp_input(self, mock_vasp, mock_os, mock_load_pseudo_setup,
-                        mock_load_kpoints_settings, mock_load_incar_settings):
+    def test_vasp_input(self, mock_vasp, mock_os, mock_load_alat,
+                        mock_load_pseudo_setup, mock_load_kpoints_settings, mock_load_incar_settings):
         """
         Test case for the VASP_input function. It checks the following:
         1. That the correct INCAR, KPOINTS, and POTCAR settings are loaded.
@@ -29,9 +29,16 @@ class TestVASPInput(unittest.TestCase):
         """
 
         # setup mock return values
-        mock_load_incar_settings.return_value = {'encut': 400, 'ismear': 0, 'sigma': 0.1}
-        mock_load_kpoints_settings.return_value = {'kpts': [4, 4, 1]}
-        mock_load_pseudo_setup.return_value = {'Co': '_Co', 'Cr': '_Cr', 'Fe': '_Fe'}
+        mock_load_incar_settings.return_value = {
+            'istart': 0, 'icharg': 2, 'encut': 400, 'algo': 'Normal', 
+            'nelm': 60, 'ediff': 1E-06, 'ismear': 1, 'sigma': 0.1, 
+            'ispin': 2, 'ediffg': -5E-02, 'nsw': 20, 'ibrion': 1
+        }
+        mock_load_kpoints_settings.return_value = {
+            'kpts': [2, 3, 4], 'gamma': True
+        }
+        mock_load_pseudo_setup.return_value = {'base': 'recommended'}
+        mock_load_alat.return_value = {'a': 3.6} # Mock il valore di alat
        
         # mock the environment variable
         mock_os.environ = {}
@@ -55,11 +62,21 @@ class TestVASPInput(unittest.TestCase):
         mock_vasp.assert_called_once_with(
             directory='conf_1',
             xc='PBE',
-            setups={'Co': '_Co', 'Cr': '_Cr', 'Fe': '_Fe'},
+            setups={'base': 'recommended'},
             encut=400,
-            ismear=0,
+            istart=0,
+            icharg=2,
+            algo='Normal',
+            nelm=60,
+            ediff=1E-06,
+            ismear=1,
             sigma=0.1,
-            kpts=[4, 4, 1]
+            ispin=2,
+            ediffg=-5E-02,
+            nsw=20,
+            ibrion=1,
+            kpts=[2, 3, 4],
+            gamma=True
         )
        
         # check that write_input was called with the correct Atoms object
@@ -69,9 +86,16 @@ class TestVASPInput(unittest.TestCase):
         # verify the Atoms object
         self.assertEqual(atoms_arg.get_chemical_symbols(), species)
         self.assertTrue((atoms_arg.get_positions() == positions).all())
-        self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), [[12.727922061357855, 0.0, 0.0],
-                                                                 [0.0, 8.81816307401944, 0.0],
-                                                                 [0.0, 0.0, 6.235382907247957]])))
+       
+        # calculate cell using 'alat'
+        alat = 3.6
+        a_nn=alat/np.sqrt(2)
+        expected_cell = np.array([
+            [5*a_nn, 0.0, 0.0],
+            [0.0, alat * 4*a_nn*np.sqrt(3)/2, 0.0],
+            [0.0, 0.0, 3*a_nn*np.sqrt(6)/3]
+        ])
+        self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), expected_cell)))
         self.assertTrue(np.all(atoms_arg.get_pbc()))
 
 # If the file is correctly executed, then tests are executed
