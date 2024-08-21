@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+from unittest.mock import patch
 from ase.build import fcc111
 from functions import Coordinates
 
@@ -8,18 +9,23 @@ class TestCoordinates(unittest.TestCase):
     Unit test class for the Coordinates function.
     """
 
-    def test_coordinates_shape(self):
+    @patch('functions.load_alat')
+    def test_coordinates_shape(self, mock_load_alat):
         """
         Test if the Coordinates function returns an array with shape (60, 3).
         """
+        mock_load_alat.return_value = 3.6
         coords = Coordinates()
         self.assertEqual(coords.shape, (60, 3))
 
-    def test_atom_positions(self):
+    @patch('functions.load_alat')
+    def test_atom_positions(self, mock_load_alat):
         """
         Test if the first atomic positions returned by Coordinates
         match the expected positions for Ni fcc(111).
         """
+        mock_load_alat.return_value = 3.6
+
         expected_positions = np.array([
             [ 1.27279221,  0.73484692,  0.        ],
             [ 3.81837662,  0.73484692,  0.        ],
@@ -29,21 +35,25 @@ class TestCoordinates(unittest.TestCase):
             [ 0.        ,  2.93938769,  0.        ]
             # ... more positions can be added as needed ...
         ])
-       
+      
         coords = Coordinates()
-       
+      
         # Verify that the first n positions are equal to the expected ones (with a certain tolerance)
         np.testing.assert_almost_equal(coords[:len(expected_positions)], expected_positions, decimal=6)
-   
-    def test_fcc_properties(self):
+
+    @patch('functions.load_alat')
+    def test_fcc_properties(self, mock_load_alat):
         """
         Test some properties of the fcc lattice, such as the nearest neighbor distance
         and the angle between base vectors.
         """
+        mock_load_alat.return_value = 3.6
+
+
         coords = Coordinates()
 
         # Test the distance between nearest neighbors
-        d = np.linalg.norm(coords[0] - coords[1])  
+        d = np.linalg.norm(coords[0] - coords[1]) 
         expected_d = 3.6 / np.sqrt(2)
         self.assertAlmostEqual(d, expected_d, places=6)
 

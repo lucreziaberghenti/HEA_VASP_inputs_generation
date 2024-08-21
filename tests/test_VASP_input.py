@@ -9,14 +9,15 @@ class TestVASPInput(unittest.TestCase):
     Unit test class for the VASP_input function. It uses unittest and mocking
     to verify the behavior of the VASP_input function in different scenarios.
     """
-
     @patch('functions.load_incar_settings')
     @patch('functions.load_kpoints_settings')
     @patch('functions.load_pseudo_setup')
+    @patch('functions.load_alat') 
     @patch('functions.os')
     @patch('functions.Vasp')
-    
-    def test_vasp_input(self, mock_vasp, mock_os, mock_load_pseudo_setup, mock_load_kpoints_settings, mock_load_incar_settings):
+
+    def test_vasp_input(self, mock_vasp, mock_os, mock_load_alat,
+                        mock_load_pseudo_setup, mock_load_kpoints_settings, mock_load_incar_settings):
         """
         Test case for the VASP_input function. It checks the following:
         1. That the correct INCAR, KPOINTS, and POTCAR settings are loaded.
@@ -36,7 +37,8 @@ class TestVASPInput(unittest.TestCase):
             'kpts': [2, 3, 4], 'gamma': True
         }
         mock_load_pseudo_setup.return_value = {'base': 'recommended'}
-               
+        mock_load_alat.return_value = 3.6 # Mock il valore di alat
+
         # mock the environment variable
         mock_os.environ = {}
        
@@ -75,7 +77,7 @@ class TestVASPInput(unittest.TestCase):
             kpts=[2, 3, 4],
             gamma=True
         )
-       
+
         # check that write_input was called with the correct Atoms object
         mock_calc.write_input.assert_called_once()
         atoms_arg = mock_calc.write_input.call_args[0][0]
@@ -83,10 +85,14 @@ class TestVASPInput(unittest.TestCase):
         # verify the Atoms object
         self.assertEqual(atoms_arg.get_chemical_symbols(), species)
         self.assertTrue((atoms_arg.get_positions() == positions).all())
-       
+
+        # calculate cell using 'alat'
+        alat = 3.6
+        a_nn=alat/np.sqrt(2)
         self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), [[12.727922061357855, 0.0, 0.0],
                                                                  [0.0, 8.81816307401944, 0.0],
                                                                  [0.0, 0.0, 6.235382907247957]])))
+
         self.assertTrue(np.all(atoms_arg.get_pbc()))
 
 # If the file is correctly executed, then tests are executed
