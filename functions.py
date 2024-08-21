@@ -5,44 +5,66 @@ from ase.calculators.vasp import Vasp #ase is a tool used just to create input f
 from ase.build import fcc111
 import json
 
-# function that reads INCAR parameters written by the user
+# function that loads settings.json file (whole dictionary)
+def load_settings():
+    """
+    Reads all settings from the JSON file.
+    
+    Returns:
+    settings (dict): A dictionary containing all the settings.
+    """
+    file_path = './settings.json' # Percorso al tuo file settings.json
+    with open(file_path, 'r') as file:
+        settings = json.load(file)
+    return settings
+
+# function that loads INCAR settings from settings.json file
 def load_incar_settings():
     """
-    Reads INCAR parameters from a JSON file.
-
+    Extracts INCAR parameters from the settings dictionary.
+    
     Returns:
     incar_settings (dict): A dictionary containing the INCAR settings.
     """
-    file_path='./settings/incar_settings.json'
-    with open(file_path, 'r') as file:
-        incar_settings = json.load(file)
+    settings = load_settings()
+    incar_settings = settings.get('incar_settings', {})
     return incar_settings
 
-# function that reads KPOINTS parameters written by the user
+# function that loads KPOINTS settings from settings.json file
 def load_kpoints_settings():
     """
-    Reads KPOINTS parameters from a JSON file.
-
+    Extracts KPOINTS parameters from the settings dictionary.
+    
     Returns:
     kpoints_settings (dict): A dictionary containing the KPOINTS settings.
     """
-    file_path='./settings/kpoints_settings.json'
-    with open(file_path, 'r') as file:
-        kpoints_settings = json.load(file)
+    settings = load_settings()
+    kpoints_settings = settings.get('kpoints_settings', {})
     return kpoints_settings
 
-# function that reads pseudopotentials parameters written by the user
+# function that loads pseupotentials setup from settings.json file
 def load_pseudo_setup():
     """
-    Reads pseudopotentials parameters from a JSON file.
-
+    Extracts pseudo_setup from the settings dictionary.
+    
     Returns:
-    pseudo_setup (dict): A dictionary containing the pseudopotentials setup.
+    pseudo_setup (dict): A dictionary containing the pseudopotentials settings.
     """
-    file_path='./settings/pseudo_setup.json'
-    with open(file_path, 'r') as file:
-        pseudo_setup = json.load(file)
+    settings = load_settings()
+    pseudo_setup = settings.get('pseudo_setup', {})
     return pseudo_setup
+
+# function that loads alat from settings.json file
+def load_alat():
+    """
+    Extracts the lattice parameter 'a' from the settings dictionary.
+    
+    Returns:
+    alat (float): The lattice parameter 'a'.
+    """
+    settings = load_settings()
+    alat = settings.get('alat', {}).get('a', None) # Ritorna None se 'a' non è presente
+    return alat
 
 # function that creates all the VASP input files using ase.calculators.vasp
 # it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
@@ -62,7 +84,7 @@ def VASP_input(species, positions, n):
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
-    a_fcc=3.6 
+    a_fcc=load_alat() 
     # distance between nn in xy-plane, side of equilateral triangle
     a_nn=a_fcc/math.sqrt(2) 
 
