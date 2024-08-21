@@ -18,6 +18,20 @@ def load_settings():
         settings = json.load(file)
     return settings
 
+# function that loads alat from settings.json file
+def load_alat():
+    """
+    Extracts the lattice parameter 'a' from the settings dictionary.
+    
+    Returns:
+    alat (float): The lattice parameter 'a'.
+    """
+    settings = load_settings()
+    alat_dict = settings["alat"]
+    alat=alat_dict["a"]
+    
+    return alat
+
 # function that loads INCAR settings from settings.json file
 def load_incar_settings():
     """
@@ -73,7 +87,7 @@ def VASP_input(species, positions, n):
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
-    a_fcc= 3.6 
+    a_fcc= load_alat()
     # distance between nn in xy-plane, side of equilateral triangle
     a_nn=a_fcc/math.sqrt(2) 
 
@@ -178,7 +192,7 @@ def Coordinates():
     """
     ncol, nrow, nslice= 5, 4, 3
     # lattice parameter, angstrom 
-    a_fcc= 3.6
+    a_fcc= load_alat()
     # we are interested only in coordinates, so I use Ni atoms just as en example (I could have used Fe or whatever)
     atoms=fcc111(symbol='Ni', size=(ncol, nrow, nslice), a=a_fcc, vacuum=None, orthogonal=True)
     coord=atoms.get_positions()           
