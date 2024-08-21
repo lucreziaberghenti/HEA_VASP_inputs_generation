@@ -84,7 +84,7 @@ def VASP_input(species, positions, n):
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
-    a_fcc=load_alat() 
+    a_fcc= load_alat() 
     # distance between nn in xy-plane, side of equilateral triangle
     a_nn=a_fcc/math.sqrt(2) 
 
@@ -189,7 +189,7 @@ def Coordinates():
     """
     ncol, nrow, nslice= 5, 4, 3
     # lattice parameter, angstrom 
-    a_fcc=3.6 
+    a_fcc= load_alat()
     # we are interested only in coordinates, so I use Ni atoms just as en example (I could have used Fe or whatever)
     atoms=fcc111(symbol='Ni', size=(ncol, nrow, nslice), a=a_fcc, vacuum=None, orthogonal=True)
     coord=atoms.get_positions()           
