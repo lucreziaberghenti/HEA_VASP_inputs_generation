@@ -172,39 +172,6 @@ def Find(m1,m2):
                     return 1
     return 0      
 
-# function that takes as input a conf of dim (nz,ny,nx) and returns a matrix 8-times bigger
-def Big_conf(conf):
-    """
-    Generates a matrix that is 8 times bigger than the input matrix.
-
-    Args:
-    conf (ndarray): Input matrix.
-
-    Returns:
-    big_conf (ndarray): Matrix that is 8 times bigger than the input matrix.
-    """
-    nz, ny, nx = conf.shape
-
-    #dimensions of 8x conf matrix 
-    Nslice=2*nz
-    Nrow=2*ny
-    Ncol=2*nx
-
-    # inizitialize big_conf initially doubling only in the xy-plane
-    big_conf=np.zeros((nz,Nrow,Ncol),dtype=int)
-
-    for sl in range(0,nz):
-        # rows of big_conf obtained by concatenating conf rows with itself
-        for row in range(0,ny):
-            big_conf[sl,row]=np.concatenate((conf[sl,row],conf[sl,row]))
-        # analogous for columns
-        for col in range(0,Ncol):
-            big_conf[sl,:,col]=np.concatenate((conf[sl,:,(col%nx)],conf[sl,:,(col%nx)]))   #%ncol modulo ncol because conf has half columns of new_conf
-
-    # now I have doubled only in xy dimensions by concatenating rows and columns, big_conf has dim: (3,8,10)
-    # concatenate big_conf with itself to double also along z
-    big_conf=np.concatenate((big_conf, big_conf))
-    return big_conf
 
 # functions that checks if conf matrix is equivalent to one of the matrices of saved
 # returns 1 if matrices are equivalent, otherwise it returns 0
@@ -221,7 +188,9 @@ def Equivalent(conf, saved):
     """
     # repeat is 1 unless a non-equivalent new conf is generated
     repeat=1
-    big_conf=Big_conf(conf)
+
+    #matrix that is 8 times bigger than the input matrix
+    big_conf=big_conf=np.tile(conf, (2,2,2))
             
     # check if equivalent matrix is already saved in "saved.npy"
 
