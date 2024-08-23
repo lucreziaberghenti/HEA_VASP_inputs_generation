@@ -7,12 +7,14 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
     Unit test class for the Generate_species function.
     """
 
-    def test_generate_species(self):
+    def test_all_range(self):
         """
-        Test the Generate_species function with various configurations of matrices.
+        input: 2x2x2 matrix of integers values ranging from 1 to 5
+        what: apply Generate_species that maps each element of the matrix into a specific string
+        expected output: a list of str
+        
         """
 
-        # Test with a 2x2x2 matrix having values from 1 to 5
         conf = np.array([
             [[1, 2], [3, 4]],
             [[5, 1], [2, 3]]
@@ -21,15 +23,30 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
         expected_output = ['Co', 'Cr', 'Fe', 'Mn', 'Ni', 'Co', 'Cr', 'Fe']
         self.assertEqual(Generate_species(conf), expected_output)
 
-        # Test with a 1x2x2 matrix having values from 1 to 3
+    def test_part_of_range(self):
+        """
+        input: 1x2x2 matrix having values from 1 to 3
+        what: apply Generate_species that maps each element of the matrix into a string
+        expected output: a list of str
+
+        """
+ 
         conf = np.array([
             [[1, 2], [3, 1]]
         ], dtype=int)
 
         expected_output = ['Co', 'Cr', 'Fe', 'Co']
         self.assertEqual(Generate_species(conf), expected_output)
-       
-        # Test with a 1x1x1 matrix having only one value
+
+    def single_value(self):   
+        """
+        input: 1x1x1 matrix having only one integer value in the range 1:5
+        what: apply Generate_species that maps the element of the matrix into a string
+        expected output: a list of one string element
+
+        """
+
+        # Test with a 
         conf = np.array([
             [[5]]
         ], dtype=int)
@@ -38,6 +55,16 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
         self.assertEqual(Generate_species(conf), expected_output)
 
         # Test with a matrix containing non-mapped values
+        
+
+    def test_non_mapped_values(self):
+        """
+        input: 1x1x1 matrix having only one integer value outside the range 1:5
+        what: apply Generate_species that maps the element of the matrix into a string
+        expected output: 'error'
+
+        """
+
         conf = np.array([
             [[0]]
         ], dtype=int)
