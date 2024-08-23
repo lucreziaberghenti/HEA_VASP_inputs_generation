@@ -222,7 +222,7 @@ def Equivalent(conf, saved):
 
 
 # function that generates a new random configuration non-equivalent to the ones in saved
-def newConf(saved):
+def newConf(saved,ncol, nrow, nslice):
     """
     Generates a new random configuration that is non-equivalent to the ones in a list.
 
@@ -232,10 +232,10 @@ def newConf(saved):
     Returns:
     conf (ndarray): New random configuration.
     """
-    ncol, nrow, nslice= 5, 4, 3
+    #number of atoms for each element
+    n_el=(ncol*nrow*nslice)/5
     # np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
-    n=np.array([12, 12, 12, 12, 12],dtype=int)
-    n_tot=np.sum(n)
+    n=np.array([n_el, n_el, n_el, n_el, n_el],dtype=int)
 
     # variable that iterates the loop if an equivalent configuration is generated (and consequently discarded)
     # set to zero when successfully generate a new conf inequivalent to the ones saved
@@ -247,6 +247,8 @@ def newConf(saved):
         temp=np.append(temp, np.repeat(i,n[i-1]))   
     
     while repeat:
+        #fix the random seed
+        np.random.seed(0)
         # random permutation of linear array
         temp=np.random.permutation(temp)
         # then reshap the permutated array with the desired dimensions
