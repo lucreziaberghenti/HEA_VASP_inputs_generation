@@ -345,4 +345,4 @@ def newConf(saved):
         # check if conf is equivalente to the matrices of saved
         repeat=Equivalent(conf, saved)
         
-        return conf
+    return conf
