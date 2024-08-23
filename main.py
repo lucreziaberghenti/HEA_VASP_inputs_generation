@@ -7,9 +7,12 @@ import functions as fn
 # dimensions of unit cell (x,y,z)=(5,4,3)
 ncol, nrow, nslice= 5, 4, 3
 
+#path of the input settings
+settings_path='./tests/settings_tests.json'
+
 # create an np array of dim (60, 3) of cartesian coordinates (x,y,z) for each atom
 # positions of lattice sites don't depend on configuration but only on lattice geometry
-coord=fn.Coordinates()
+coord=fn.Coordinates(settings_path)
 
 # convert the np coord array into a list in order to use python ase function
 positions=coord.tolist()
@@ -47,7 +50,7 @@ saved=np.append(saved, conf)
 species=fn.Generate_species(conf)
 
 # function that generates VASP input files
-fn.VASP_input(species,positions,s)
+fn.VASP_input(species,positions,s,settings_path)
 
 # reshape using the update number of saved configurations s: (s,nslice,nrow,ncol) 
 # since when I add the new configuration "saved" loses its original shape
