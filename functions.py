@@ -116,14 +116,16 @@ def Generate_species(conf):
     Returns:
     species (list): List of chemical species.
     """
-    species=[]
+    
     nz, ny, nx = conf.shape
 
-    for sl in range(0, nz):
-        for row in range(0,ny):
-            for col in range(0,nx):
-                species.append(element(conf[sl,row,col]))
-                
+    #list of string elements
+    species=[]
+
+    #loop over conf element that are converted into str by element function           
+    for x in np.nditer(conf):
+        species.append(element(x))
+
     return species
 
 # function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
