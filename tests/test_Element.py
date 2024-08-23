@@ -6,14 +6,14 @@ class TestElementFunction(unittest.TestCase):
     Unit test class for the Element function.
     """
 
-    def test_element(self):
+    def test_positive_cases(self):
         """
-        Test if the Element function returns:
-        - the correct element corresponding to input in the range 1:5
-        - 'error' if the input is outside the range 1:5
+        input: an integer between the range 1:5
+        what: apply 'element' to the input which maps int in the range 1:5 to a certain string 
+        expected output: a string corresponding to a precise element
+
         """
 
-        # test of correct cases
         self.assertEqual(element(1),'Co')
 
         self.assertEqual(element(2),'Cr')
@@ -24,7 +24,14 @@ class TestElementFunction(unittest.TestCase):
 
         self.assertEqual(element(5),'Ni')
 
-        # test of input of element function outside of the range 1:5
+    def test_negative_cases(self):
+
+        """
+        input: an integer between outside the range 1:5
+        what: apply 'element'to the input which maps int in the range 1:5 to a certain string 
+        expected output: an error since the input is outside the range of 'element' function
+        
+        """
         self.assertEqual(element(0),'error')
 
         self.assertEqual(element(6),'error')
