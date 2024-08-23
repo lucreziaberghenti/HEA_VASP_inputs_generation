@@ -6,7 +6,6 @@ import json
 
 #load the dictionary used for testing: settings_tests.json
 #in this dictionary alat=3.6
-
 file_path = './tests/settings_tests.json' 
 
 class TestCoordinates(unittest.TestCase):
