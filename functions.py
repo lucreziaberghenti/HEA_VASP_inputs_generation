@@ -161,22 +161,14 @@ def Find(m1,m2):
     """
     nz, ny, nx = m2.shape
 
-    # np array that will be used to sweep the bigger matrix
-    temp=np.zeros((nz, ny, nx),dtype=int)
-    
     # loop over the increments p,m,n of then indeces nslice,nrow,ncol to sweep all the m1 matrix to find m2
     for p in range(0, nz):             
         for m in range(0,ny):
             for n in range(0,nx):
-                # for each pair of increments m,n
-                # create the sub-matrix temp of dimension of m2 but equal to the row+m and column+n of m1
-                for sl in range(0, nz):
-                    for row in range(0,ny):
-                        for col in range(0,nx):
-                            temp[sl,row,col]=m1[sl+p,row+m,col+n]
 
-                # check if temp is equal to m2
-                if np.array_equal(temp,m2):
+                # extract submatrix of m1 anche check if it is equal to m2
+                submatrix=m1[p:(p+nz),m:(m+ny),n:(n+nx)]
+                if np.array_equal(submatrix,m2):
                     return 1
     return 0      
 
