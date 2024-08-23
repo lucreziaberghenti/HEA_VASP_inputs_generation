@@ -222,7 +222,7 @@ def Equivalent(conf, saved):
 
 
 # function that generates a new random configuration non-equivalent to the ones in saved
-def newConf(saved,ncol, nrow, nslice):
+def newConf(saved, ncol, nrow, nslice):
     """
     Generates a new random configuration that is non-equivalent to the ones in a list.
 

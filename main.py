@@ -35,7 +35,7 @@ else:
 # generate inequivalent random configuration
 # generate random matrix (nslice x nrow x ncol)=(3, 4, 5) having elements 1,2,3,4,5 repeated 12 times each
 # the function newConf also check that in "saved" there is not an equivalent conf to the one generated
-conf=fn.newConf(saved)
+conf=fn.newConf(saved, ncol, nrow, nslice)
 
 # increment the counter since a new configuration is added
 s+=1
