@@ -5,16 +5,12 @@ from ase.calculators.vasp import Vasp #ase is a tool used just to create input f
 from ase.build import fcc111
 import json
 
-#load the dictionary where input parameters are stored
-file_path = './settings.json' 
-with open(file_path, 'r') as file:
-    settings = json.load(file)
 
 
 # function that creates all the VASP input files using ase.calculators.vasp
 # it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 # it returns the input files
-def VASP_input(species, positions, n):
+def VASP_input(species, positions, n, path):
     """
     Creates VASP input files using ase.calculators.vasp.
 
@@ -26,6 +22,10 @@ def VASP_input(species, positions, n):
     Returns:
     None
     """
+    #load settings from the input path
+    with open(path, 'r') as file:
+        settings = json.load(file)
+
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
@@ -129,7 +129,7 @@ def Generate_species(conf):
     return species
 
 # function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
-def Coordinates(): 
+def Coordinates(path): 
     """
     Generates a numpy array of lattice coordinates for a (111)-fcc lattice.
 
@@ -137,9 +137,14 @@ def Coordinates():
     coord (ndarray): Array of lattice coordinates.
     """
     ncol, nrow, nslice= 5, 4, 3
+
+    #load settings from the input path
+    #load settings from the input path
+    with open(path, 'r') as file:
+        settings = json.load(file)
+
     # lattice parameter, angstrom 
-    alat_dict = settings["alat"]
-    a_fcc= alat_dict["a"]
+    a_fcc = settings["alat"]["a"]
 
     # we are interested only in coordinates, so I use Ni atoms just as en example (I could have used Fe or whatever)
     atoms=fcc111(symbol='Ni', size=(ncol, nrow, nslice), a=a_fcc, vacuum=None, orthogonal=True)
