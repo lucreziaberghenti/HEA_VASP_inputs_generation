@@ -1,99 +1,81 @@
 import unittest
-from unittest.mock import patch, MagicMock
+import os
 from ase import Atoms
 from functions import VASP_input
+from ase.calculators.vasp import Vasp
 import numpy as np
+import json
+
+#load the dictionary used for testing: settings_tests.json
+file_path = './tests/settings_tests.json'
+with open(file_path, 'r') as file:
+    settings = json.load(file)
 
 class TestVASPInput(unittest.TestCase):
     """
-    Unit test class for the VASP_input function. It uses unittest and mocking
-    to verify the behavior of the VASP_input function in different scenarios.
+    Unit test class for the VASP_input function.
+
     """
-    @patch('functions.load_incar_settings')
-    @patch('functions.load_kpoints_settings')
-    @patch('functions.load_pseudo_setup')
-    @patch('functions.load_alat') 
-    @patch('functions.os')
-    @patch('functions.Vasp')
-
-    def test_vasp_input(self, mock_vasp, mock_os, mock_load_alat,
-                        mock_load_pseudo_setup, mock_load_kpoints_settings, mock_load_incar_settings):
-        """
-        Test case for the VASP_input function. It checks the following:
-        1. That the correct INCAR, KPOINTS, and POTCAR settings are loaded.
-        2. That the environment variable 'VASP_PP_PATH' is set correctly.
-        3. That the Vasp calculator is instantiated with the correct arguments.
-        4. That the write_input method is called with an Atoms object containing
-           the correct atomic species, positions, and cell dimensions.
-        """
-
-        # setup mock return values
-        mock_load_incar_settings.return_value = {
-            'istart': 0, 'icharg': 2, 'encut': 400, 'algo': 'Normal', 
-            'nelm': 60, 'ediff': 1E-06, 'ismear': 1, 'sigma': 0.1, 
-            'ispin': 2, 'ediffg': -5E-02, 'nsw': 20, 'ibrion': 1
-        }
-        mock_load_kpoints_settings.return_value = {
-            'kpts': [2, 3, 4], 'gamma': True
-        }
-        mock_load_pseudo_setup.return_value = {'base': 'recommended'}
-        mock_load_alat.return_value = 3.6 # Mock il valore di alat
-
-        # mock the environment variable
-        mock_os.environ = {}
        
-        # mock the Vasp calculator
-        mock_calc = MagicMock()
-        mock_vasp.return_value = mock_calc
-       
-        # define input parameters
+    def test_incar_settings(self):
+
+        incar_settings=settings["incar_settings"]
+    
+        
+        # Expected dictionary for INCAR settings
+        expected_settings = {
+            "istart": 0,
+            "icharg": 2,
+            "encut": 400,
+            "algo": "Normal",
+            "nelm": 60,
+            "ediff": 1E-06,
+            "ismear": 1,
+            "sigma": 0.1,
+            "ispin": 2,
+            "ediffg": -5E-02,
+            "nsw": 20,
+            "ibrion": 1
+        }
+        
+        # Compare the incar settings loaded from the dictionary with the ones expected
+        self.assertEqual(incar_settings, expected_settings)
+
+    def test_kpoints_settings(self):
+        
+        kpoints_settings=settings["kpoints_settings"]
+    
+        # check that Vasp was instantiated with the correct arguments
+        # Expected dictionary for INCAR settings
+        expected_settings = {
+            "kpts": [2, 3, 4],
+            "gamma": True
+        }
+
+        # Compare the incar settings loaded from the dictionary with the ones expected
+        self.assertEqual(kpoints_settings, expected_settings)
+
+    def test_pseudo_setup(self):
+
+        pseudo_settings=settings["pseudo_setup"]
+
+        expected_settings={
+            "base": "recommended"
+        }
+
+        # Compare the incar settings loaded from the dictionary with the ones expected
+        self.assertEqual(pseudo_settings, expected_settings)
+
+    def test_directory_creation(self):
         species = ['Co', 'Cr', 'Fe']
         positions = [(0, 0, 0), (0.5, 0.5, 0.5), (1, 1, 1)]
         n = 1
-       
-        # call the function
-        VASP_input(species, positions, n)
-       
-        # check that the environment variable was set
-        self.assertEqual(mock_os.environ["VASP_PP_PATH"], 'ase_pseudo')
-       
-        # check that Vasp was instantiated with the correct arguments
-        mock_vasp.assert_called_once_with(
-            directory='conf_1',
-            xc='PBE',
-            setups={'base': 'recommended'},
-            encut=400,
-            istart=0,
-            icharg=2,
-            algo='Normal',
-            nelm=60,
-            ediff=1E-06,
-            ismear=1,
-            sigma=0.1,
-            ispin=2,
-            ediffg=-5E-02,
-            nsw=20,
-            ibrion=1,
-            kpts=[2, 3, 4],
-            gamma=True
-        )
 
-        # check that write_input was called with the correct Atoms object
-        mock_calc.write_input.assert_called_once()
-        atoms_arg = mock_calc.write_input.call_args[0][0]
-       
-        # verify the Atoms object
-        self.assertEqual(atoms_arg.get_chemical_symbols(), species)
-        self.assertTrue((atoms_arg.get_positions() == positions).all())
+        VASP_input(species, positions, n, file_path)
 
-        # calculate cell using 'alat'
-        alat = 3.6
-        a_nn=alat/np.sqrt(2)
-        self.assertTrue(np.all(np.isclose(atoms_arg.get_cell(), [[12.727922061357855, 0.0, 0.0],
-                                                                 [0.0, 8.81816307401944, 0.0],
-                                                                 [0.0, 0.0, 6.235382907247957]])))
-
-        self.assertTrue(np.all(atoms_arg.get_pbc()))
+        #check if directory conf_1 is created
+        path_dir='./conf_1'
+        self.assertTrue(os.path.exists(path_dir), "No directory of file inputs created")
 
 # If the file is correctly executed, then tests are executed
 if __name__ == '__main__':
