@@ -13,8 +13,6 @@ class TestElementFunction(unittest.TestCase):
         - 'error' if the input is outside the range 1:5
         """
 
-        print("running test...")
-
         # test of correct cases
         self.assertEqual(element(1),'Co')
 
