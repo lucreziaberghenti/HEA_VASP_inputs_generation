@@ -69,7 +69,10 @@ class Test_newConf(unittest.TestCase):
         """
 
         saved = [np.array([[[1,2,3,4,5]]])]
-       
+
+        # (1,1,5) is the smallest dimension (or equivalently (1,5,1) or (5,1,1)) 
+        # since ncol*nrow*nslice should be a multiple of 5 since the 5 elements have the same number of atoms for each configuration
+        
         conf = newConf(saved, 1, 1, 5)
        
         self.assertFalse(np.array_equal(saved, conf), "The two saved configurations should be different")
