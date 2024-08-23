@@ -46,15 +46,12 @@ class TestGenerateSpeciesFunction(unittest.TestCase):
 
         """
 
-        # Test with a 
         conf = np.array([
             [[5]]
         ], dtype=int)
 
         expected_output = ['Ni']
         self.assertEqual(Generate_species(conf), expected_output)
-
-        # Test with a matrix containing non-mapped values
         
 
     def test_non_mapped_values(self):
