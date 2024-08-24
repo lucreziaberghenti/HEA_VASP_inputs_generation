@@ -2,6 +2,7 @@ import math
 import numpy as np
 import os
 import functions as fn
+import json
 
 # dimensions of unit cell (x,y,z)=(5,4,3)
 ncol, nrow, nslice= 5, 4, 3
@@ -12,8 +13,17 @@ ncol, nrow, nslice= 5, 4, 3
 #60 atoms in total each of 5 elements repeated 12 times (HEA have equal concentration of each element)
 n=np.repeat(np.arange(1,6), 12)
 
+
+#load paths from paths.json
+with open('paths.json', 'r') as file:
+    paths = json.load(file)
+
 #path of the input settings
-settings_path='./tests/settings_tests.json'
+settings_path=paths["settings"]["path"]
+#path of saved variable where configurations are stored
+saved_path=paths["saved"]["path"]
+#random seed written by the user
+seed=paths["seed"]["number"]
 
 # create an np array of dim (60, 3) of cartesian coordinates (x,y,z) for each atom
 # positions of lattice sites don't depend on configuration but only on lattice geometry
@@ -26,10 +36,7 @@ positions=coord.tolist()
 saved=np.array([],dtype=int)
 
 # check if 'saved.npy' exists
-# define the path where saved should be searched
-path = './saved.npy'
-
-if os.path.exists(path):
+if os.path.exists(saved_path):
     # saved is an np array of dimensions: s, nslice, nrow, ncol
     saved=np.load('saved.npy')
     # read the number of saved configurations
@@ -42,7 +49,7 @@ else:
 # generate inequivalent random configuration
 # generate random matrix (nslice x nrow x ncol)=(3, 4, 5) having elements 1,2,3,4,5 repeated 12 times each
 # the function newConf also check that in "saved" there is not an equivalent conf to the one generated
-conf=fn.newConf(saved, nslice, nrow, ncol, n)
+conf=fn.newConf(saved, nslice, nrow, ncol, n, seed)
 
 # increment the counter since a new configuration is added
 s+=1
