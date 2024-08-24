@@ -18,6 +18,7 @@ def VASP_input(species, positions, n, path):
     species (list): List of chemical species of atoms.
     positions (list): List of positions of atoms.
     n (int): Number of the configuration generated.
+    path of the input settings (json file).
 
     Returns:
     None
@@ -132,6 +133,9 @@ def Coordinates(path):
     """
     Generates a numpy array of lattice coordinates for a (111)-fcc lattice.
 
+    Args:
+    path of the input settings (json file)
+
     Returns:
     coord (ndarray): Array of lattice coordinates.
     """
@@ -237,12 +241,9 @@ def newConf(saved, nslice, nrow, ncol, n, seed):
     conf (ndarray): New random configuration.
     """
     
-
     # variable that iterates the loop if an equivalent configuration is generated (and consequently discarded)
     # set to zero when successfully generate a new conf inequivalent to the ones saved
     repeat=1
-    
-       
     
     while repeat:
         #fix the random seed
