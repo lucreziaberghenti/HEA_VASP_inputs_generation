@@ -9,5 +9,9 @@
 
     "seed":{
         "number": 0
+    },
+
+    "conf": {
+        "path": "./"
     }
 }
