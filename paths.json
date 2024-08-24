@@ -1,0 +1,13 @@
+{
+    "settings": {
+        "path": "./settings.json"
+    },
+
+    "saved": {
+        "path": "./saved.npy"
+    },
+
+    "seed":{
+        "number": 0
+    }
+}

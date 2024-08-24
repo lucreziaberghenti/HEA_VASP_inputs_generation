@@ -1,8 +1,0 @@
-settings path:
-'./tests/settings_tests.json'
-
-path of the variable where configurations are saved:
-'./saved.npy'
-
-random seed:
-0
