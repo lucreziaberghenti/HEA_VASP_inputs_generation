@@ -3,9 +3,14 @@ import numpy as np
 import os
 import functions as fn
 
-# global variables: their value is fixed, never modified in the code
 # dimensions of unit cell (x,y,z)=(5,4,3)
 ncol, nrow, nslice= 5, 4, 3
+
+#define the elements of the new configuration
+#np.arange produces the np array [1,2,3,4,5]
+#np.repeat repeates each element 5 times (HEA have equal concentration of each element)
+#60 atoms in total
+n=np.repeat(np.arange(1,6), 5)
 
 #path of the input settings
 settings_path='./tests/settings_tests.json'
@@ -33,11 +38,6 @@ if os.path.exists(path):
 else:
     #number of saved configurations is zero
     s=0
-
-#define the elements of the new configuration
-#np.arange produces the np array [1,2,3,4,5]
-#np.repeat repeates each element 5 times
-n=np.repeat(np.arange(1,6), 5)
 
 # generate inequivalent random configuration
 # generate random matrix (nslice x nrow x ncol)=(3, 4, 5) having elements 1,2,3,4,5 repeated 12 times each
