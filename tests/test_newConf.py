@@ -3,6 +3,9 @@ import numpy as np
 from functions import newConf
 from functions import Equivalent
 
+#fix a random seed to run tests
+seed=0
+
 class Test_newConf(unittest.TestCase):
     """
     Unit test class for the newConf function.
@@ -17,7 +20,7 @@ class Test_newConf(unittest.TestCase):
         """
         saved = []
         n=np.repeat(np.arange(1,4), 2)
-        conf = newConf(saved, 1, 1, 6, n)
+        conf = newConf(saved, 1, 1, 6, n, seed)
         self.assertEqual(conf.shape, (1, 1, 6), "Wrong dimensions")
    
     def test_generate_new_conf_distribution(self):
@@ -28,7 +31,7 @@ class Test_newConf(unittest.TestCase):
         """
         saved = []
         n=np.repeat(np.arange(1,4), 2)
-        conf = newConf(saved, 1, 1, 6, n)
+        conf = newConf(saved, 1, 1, 6, n, seed)
        
         #array of ripetions
         rip_expected = np.array([2,2,2])
@@ -46,7 +49,7 @@ class Test_newConf(unittest.TestCase):
         """
         saved = [np.array([[[1,2,1,2,3,3]]])]
         n=np.repeat(np.arange(1,4), 2)
-        conf = newConf(saved, 1, 1, 6, n)
+        conf = newConf(saved, 1, 1, 6, n, seed)
        
         self.assertFalse(Equivalent(conf, saved), "Generated configuration is equivalent to one already saved")
 
@@ -59,9 +62,9 @@ class Test_newConf(unittest.TestCase):
         """
         saved = []
         n=np.repeat(np.arange(1,4), 2)
-        conf1 = newConf(saved, 1, 1, 6, n)
+        conf1 = newConf(saved, 1, 1, 6, n, seed)
         saved.append(conf1)
-        conf2 = newConf(saved, 1, 1, 6, n)
+        conf2 = newConf(saved, 1, 1, 6, n, seed)
        
         self.assertFalse(np.array_equal(conf1, conf2), "The two saved configurations should be different")
 

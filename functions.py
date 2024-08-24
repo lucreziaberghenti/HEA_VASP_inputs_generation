@@ -226,12 +226,12 @@ def Equivalent(conf, saved):
 
 
 # function that generates a new random configuration non-equivalent to the ones in saved
-def newConf(saved, nslice, nrow, ncol, n):
+def newConf(saved, nslice, nrow, ncol, n, seed):
     """
     Generates a new random configuration that is non-equivalent to the ones in a list.
 
     Args:
-    saved (list): List of saved matrices, dimensions: nslice, nrow, ncol of the new configuration, n 1-dim np array of the integer elements
+    saved (list): List of saved matrices, dimensions: nslice, nrow, ncol of the new configuration, n 1-dim np array of the integer elements, random seed
 
     Returns:
     conf (ndarray): New random configuration.
@@ -246,7 +246,7 @@ def newConf(saved, nslice, nrow, ncol, n):
     
     while repeat:
         #fix the random seed
-        np.random.seed(0)
+        np.random.seed(seed)
         # random permutation of linear array
         n=np.random.permutation(n)
         # then reshap the permutated array with the desired dimensions
