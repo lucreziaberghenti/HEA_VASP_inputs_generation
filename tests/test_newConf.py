@@ -10,72 +10,60 @@ class Test_newConf(unittest.TestCase):
 
     def test_generate_new_conf_dimensions(self):
         """
-        Test to check that the generated configuration has the correct dimensions (3, 4, 5).
+        given: - n which is the np array [1,1,2,2,3,3] that contains the elements of the new configuration to generate 
+               - the desired dimensions of the new configuration (1,1,6)
+        when: calling newConf
+        expected output: the generated conf is a ndarry of dimensions (1,1,6)
         """
         saved = []
-        conf = newConf(saved, 3, 4, 5)
-        self.assertEqual(conf.shape, (3, 4, 5), "Wrong dimensions")
+        n=np.repeat(np.arange(1,4), 2)
+        conf = newConf(saved, 1, 1, 6, n)
+        self.assertEqual(conf.shape, (1, 1, 6), "Wrong dimensions")
    
     def test_generate_new_conf_distribution(self):
         """
-        Test to verify that the generated configuration has the correct distribution of elements (1, 2, 3, 4, 5),
-        with 12 occurrences of each element.
+        given: n which is the np array [1,1,2,2,3,3] that contains the elements of the new configuration to generate
+        when: calling newConf
+        expected output: the generated conf the correct distribution of elements (1,2,3 are repeated 2 times each)
         """
         saved = []
-        conf = newConf(saved, 3, 4, 5)
+        n=np.repeat(np.arange(1,4), 2)
+        conf = newConf(saved, 1, 1, 6, n)
        
-        n_expected = np.array([12, 12, 12, 12, 12])
-        n_generated = np.array([np.sum(conf == i) for i in range(1, 6)])
+        #array of ripetions
+        rip_expected = np.array([2,2,2])
+        rip_generated = np.array([np.sum(conf == i) for i in range(1,4)])
        
-        self.assertTrue(np.array_equal(n_generated, n_expected), "Wrong distribution of elements")
+        self.assertTrue(np.array_equal(rip_generated, rip_expected), "Wrong distribution of elements")
 
     def test_generate_non_equivalent_conf(self):
         """
-        Test to ensure that the generated configuration is not equivalent
-        to any of the configurations already saved.
+        given:  - n which is the np array [1,1,2,2,3,3] that contains the elements of the new configuration to generate
+                - saved variable having only one element: np array [1,2,1,2,3,3]
+                - the desired dimensions of the new configuration (1,1,6)
+        when: calling newConf
+        expected output: the generated conf is a ndarry of dimensions (1,1,6) non-equivalent to the one saved
         """
-        saved = [np.array([[[1, 1, 2, 2, 3],
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5]],
-                           [[1, 1, 2, 2, 3],
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5]],
-                           [[1, 1, 2, 2, 3],
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5]]])]
-       
-        conf = newConf(saved, 3, 4, 5)
+        saved = [np.array([[[1,2,1,2,3,3]]])]
+        n=np.repeat(np.arange(1,4), 2)
+        conf = newConf(saved, 1, 1, 6, n)
        
         self.assertFalse(Equivalent(conf, saved), "Generated configuration is equivalent to one already saved")
 
     def test_generate_unique_conf(self):
         """
-        Test to check that multiple calls to newConf generate different configurations.
+        given:  - n which is the np array [1,1,2,2,3,3] that contains the elements of the new configuration to generate
+                - the desired dimensions of the new configuration (1,1,6)
+        when: calling newConf 2 different times
+        expected output: the generated configurations conf1 and conf2 are non-equivalent ndarrys of dimensions (1,1,6)
         """
         saved = []
-        conf1 = newConf(saved, 3, 4, 5)
+        n=np.repeat(np.arange(1,4), 2)
+        conf1 = newConf(saved, 1, 1, 6, n)
         saved.append(conf1)
-        conf2 = newConf(saved, 3, 4, 5)
+        conf2 = newConf(saved, 1, 1, 6, n)
        
         self.assertFalse(np.array_equal(conf1, conf2), "The two saved configurations should be different")
-
-    def test_smaller_matrices(self):
-        """
-        Test to ensure that the generated configuration is not equivalent
-        to any of the configurations already saved even in the case of smaller matrices
-        """
-
-        saved = [np.array([[[1,2,3,4,5]]])]
-
-        # (1,1,5) is the smallest dimension (or equivalently (1,5,1) or (5,1,1)) 
-        # since ncol*nrow*nslice should be a multiple of 5 since the 5 elements have the same number of atoms for each configuration
-        
-        conf = newConf(saved, 1, 1, 5)
-       
-        self.assertFalse(np.array_equal(saved, conf), "The two saved configurations should be different")
 
 
 if __name__ == '__main__':
