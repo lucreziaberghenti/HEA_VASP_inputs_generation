@@ -35,14 +35,9 @@ else:
     s=0
 
 #define the elements of the new configuration
-#number of atoms for each element
-n_el=(ncol*nrow*nslice)/5
-# np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
-n=np.array([n_el, n_el, n_el, n_el, n_el],dtype=int)
-# define a linear array with elements 1, 2, 3, 4, 5 repeated n1, n2, n3, n4, n5 times
-temp=np.array([], dtype=int)
-for i in range(1,6):
-    temp=np.append(temp, np.repeat(i,n[i-1]))
+#np.arange produces the np array [1,2,3,4,5]
+#np.repeat repeates each element 5 times
+n=np.repeat(np.arange(1,6), 5)
 
 # generate inequivalent random configuration
 # generate random matrix (nslice x nrow x ncol)=(3, 4, 5) having elements 1,2,3,4,5 repeated 12 times each
