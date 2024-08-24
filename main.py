@@ -13,14 +13,13 @@ ncol, nrow, nslice= 5, 4, 3
 #60 atoms in total each of 5 elements repeated 12 times (HEA have equal concentration of each element)
 n=np.repeat(np.arange(1,6), 12)
 
-
 #load paths from paths.json
 with open('paths.json', 'r') as file:
     paths = json.load(file)
 
 #path of the input settings
 settings_path=paths["settings"]["path"]
-#path of saved variable where configurations are stored
+#path of npy file where configurations are stored
 saved_path=paths["saved"]["path"]
 #random seed written by the user
 seed=paths["seed"]["number"]
@@ -38,7 +37,7 @@ saved=np.array([],dtype=int)
 # check if 'saved.npy' exists
 if os.path.exists(saved_path):
     # saved is an np array of dimensions: s, nslice, nrow, ncol
-    saved=np.load('saved.npy')
+    saved=np.load(saved_path)
     # read the number of saved configurations
     s=saved.shape[0]
     
@@ -66,4 +65,4 @@ fn.VASP_input(species,positions,s,settings_path)
 # reshape using the update number of saved configurations s: (s,nslice,nrow,ncol) 
 # since when I add the new configuration "saved" loses its original shape
 saved=np.reshape(saved, (s,nslice,nrow,ncol))
-np.save('saved.npy',saved)
+np.save(saved_path,saved)
