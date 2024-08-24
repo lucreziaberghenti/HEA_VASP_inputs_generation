@@ -29,8 +29,7 @@ def VASP_input(species, positions, n, path):
     ncol, nrow, nslice= 5, 4, 3
 
     # lattice parameter, angstrom 
-    alat_dict = settings["alat"]
-    a_fcc= alat_dict["a"]
+    a_fcc = settings["alat"]["a"]
 
     # distance between nn in xy-plane, side of equilateral triangle
     a_nn=a_fcc/math.sqrt(2) 
