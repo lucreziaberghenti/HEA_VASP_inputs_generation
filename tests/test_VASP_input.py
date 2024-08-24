@@ -18,6 +18,11 @@ class TestVASPInput(unittest.TestCase):
     """
        
     def test_incar_settings(self):
+        """
+        given: the parameters of settings_tests.json (dictionary used for testing only)
+        when: loading the incar settings
+        expected output: the loaded incar settings match the value of expected_settings variable
+        """
 
         incar_settings=settings["incar_settings"]
     
@@ -42,6 +47,11 @@ class TestVASPInput(unittest.TestCase):
         self.assertEqual(incar_settings, expected_settings)
 
     def test_kpoints_settings(self):
+        """
+        given: the parameters of settings_tests.json (dictionary used for testing only)
+        when: loading the kpoints settings
+        expected output: the loaded kpoints settings match the value of expected_settings variable
+        """
         
         kpoints_settings=settings["kpoints_settings"]
     
@@ -56,6 +66,11 @@ class TestVASPInput(unittest.TestCase):
         self.assertEqual(kpoints_settings, expected_settings)
 
     def test_pseudo_setup(self):
+        """
+        given: the parameters of settings_tests.json (dictionary used for testing only)
+        when: loading the pseudopotentials settings
+        expected output: the loaded pseudo settings match the value of expected_settings variable
+        """
 
         pseudo_settings=settings["pseudo_setup"]
 
@@ -67,6 +82,11 @@ class TestVASPInput(unittest.TestCase):
         self.assertEqual(pseudo_settings, expected_settings)
 
     def test_directory_creation(self):
+        """
+        given: settings_tests.json (dictionary used for testing only), the integer n of the nth configuration, the lists of species and positions
+        when: calling the VASP_input function 
+        expected output: a new directory 'conf_1' is created
+        """
         species = ['Co', 'Cr', 'Fe']
         positions = [(0, 0, 0), (0.5, 0.5, 0.5), (1, 1, 1)]
         n = 1
