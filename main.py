@@ -34,11 +34,20 @@ else:
     #number of saved configurations is zero
     s=0
 
+#define the elements of the new configuration
+#number of atoms for each element
+n_el=(ncol*nrow*nslice)/5
+# np arrays that contains the number of atoms for each element labeled by 1,2,3,4,5: n=[n1,n2,n3,n4,n5]
+n=np.array([n_el, n_el, n_el, n_el, n_el],dtype=int)
+# define a linear array with elements 1, 2, 3, 4, 5 repeated n1, n2, n3, n4, n5 times
+temp=np.array([], dtype=int)
+for i in range(1,6):
+    temp=np.append(temp, np.repeat(i,n[i-1]))
 
 # generate inequivalent random configuration
 # generate random matrix (nslice x nrow x ncol)=(3, 4, 5) having elements 1,2,3,4,5 repeated 12 times each
 # the function newConf also check that in "saved" there is not an equivalent conf to the one generated
-conf=fn.newConf(saved, nslice, nrow, ncol)
+conf=fn.newConf(saved, nslice, nrow, ncol, n)
 
 # increment the counter since a new configuration is added
 s+=1
