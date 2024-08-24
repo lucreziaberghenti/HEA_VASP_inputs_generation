@@ -7,8 +7,9 @@ class TestFindFunction(unittest.TestCase):
 
     def test_find_positive(self):
         """
-        Test case where 'm2' is a sub-matrix of 'm1'.
-        This should return a positive result (1).
+        given: a matrix m2 which is a sub-matrix of m1
+        when: calling Find
+        expected output: positive result (1) since there exists a sub-matrix of m1 equal to m2
         """
         m1 = np.array([[[1, 2, 4, 1],
                         [4, 1, 2, 3],
@@ -28,8 +29,9 @@ class TestFindFunction(unittest.TestCase):
 
     def test_find_negative(self):
         """
-        Test case where 'm2' is not a sub-matrix of 'm1'.
-        This should return a negative result (0).
+        given: a matrix m2 which is not a sub-matrix of m1
+        when: calling Find
+        expected output: negative result (0) since there not exists a sub-matrix of m1 equal to m2
         """
         m1 = np.array([[[1, 2, 4, 1],
                         [4, 1, 2, 3],
@@ -49,8 +51,10 @@ class TestFindFunction(unittest.TestCase):
 
     def test_find_empty_m2(self):
         """
-        Test case where 'm2' is an empty matrix.
-        This should return a negative result (0) since an empty matrix cannot be a sub-matrix of any matrix.
+        given: m2 which is an empty matrix and m1 a generic matrix
+        when: calling Find
+        expected output: a negative result (0) since an empty matrix cannot be a sub-matrix of any matrix
+        
         """
         m1 = np.array([[[1, 2, 4, 1],
                         [4, 1, 2, 3],
