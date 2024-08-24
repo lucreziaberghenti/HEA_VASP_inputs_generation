@@ -195,7 +195,7 @@ def Equivalent(conf, saved):
     repeat=1
 
     #matrix that is 8 times bigger than the input matrix
-    big_conf=big_conf=np.tile(conf, (2,2,2))
+    big_conf=np.tile(conf, (2,2,2))
             
     # check if equivalent matrix is already saved in "saved.npy"
 
