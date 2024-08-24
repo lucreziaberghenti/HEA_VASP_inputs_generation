@@ -7,8 +7,8 @@ import numpy as np
 import json
 
 #load the dictionary used for testing: settings_tests.json
-file_path = './tests/settings_tests.json'
-with open(file_path, 'r') as file:
+settings_path = './tests/settings_tests.json'
+with open(settings_path, 'r') as file:
     settings = json.load(file)
 
 class TestVASPInput(unittest.TestCase):
@@ -91,10 +91,11 @@ class TestVASPInput(unittest.TestCase):
         positions = [(0, 0, 0), (0.5, 0.5, 0.5), (1, 1, 1)]
         n = 1
 
-        VASP_input(species, positions, n, file_path)
+        conf_path='./tests/'
+        VASP_input(species, positions, n, settings_path, conf_path)
 
         #check if directory conf_1 is created
-        path_dir='./conf_1'
+        path_dir='./tests/conf_1'
         self.assertTrue(os.path.exists(path_dir), "No directory of file inputs created")
 
 # If the file is correctly executed, then tests are executed

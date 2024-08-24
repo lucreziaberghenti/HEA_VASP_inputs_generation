@@ -23,6 +23,8 @@ settings_path=paths["settings"]["path"]
 saved_path=paths["saved"]["path"]
 #random seed written by the user
 seed=paths["seed"]["number"]
+#path where the directory conf_n containing POSCAR, INCAR, KPOINTS, POTCAR is saved
+conf_path=paths["conf"]["path"]
 
 # create an np array of dim (60, 3) of cartesian coordinates (x,y,z) for each atom
 # positions of lattice sites don't depend on configuration but only on lattice geometry
@@ -60,7 +62,7 @@ saved=np.append(saved, conf)
 species=fn.Generate_species(conf)
 
 # function that generates VASP input files
-fn.VASP_input(species,positions,s,settings_path)
+fn.VASP_input(species,positions,s,settings_path,conf_path)
 
 # reshape using the update number of saved configurations s: (s,nslice,nrow,ncol) 
 # since when I add the new configuration "saved" loses its original shape

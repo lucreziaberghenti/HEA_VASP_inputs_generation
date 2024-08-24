@@ -10,7 +10,7 @@ import json
 # function that creates all the VASP input files using ase.calculators.vasp
 # it takes as input: the chemical species of atoms, their positions and the number of the configuration generated
 # it returns the input files
-def VASP_input(species, positions, n, path):
+def VASP_input(species, positions, n, settings_path, conf_path):
     """
     Creates VASP input files using ase.calculators.vasp.
 
@@ -24,7 +24,7 @@ def VASP_input(species, positions, n, path):
     None
     """
     #load settings from the input path
-    with open(path, 'r') as file:
+    with open(settings_path, 'r') as file:
         settings = json.load(file)
 
     ncol, nrow, nslice= 5, 4, 3
@@ -53,7 +53,7 @@ def VASP_input(species, positions, n, path):
     pseudo_setup = settings.get('pseudo_setup', {})
 
     # directory where the input files will be written, the input files of the nth conf are saved in "conf_n"
-    name='conf_'+str(n)
+    name=conf_path+'conf_'+str(n)
     outdir = name
 
     # set the path to the VASP pseudopotentials
