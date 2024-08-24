@@ -7,8 +7,10 @@ class TestEquivalent(unittest.TestCase):
 
     def test_equivalent_identical(self):
         """
-        Test case where the configuration 'conf' is identical to one of the elements
-        in the 'saved' array.
+        given: a configuration equal to the one already saved
+        when: calling Equivalent function
+        expected output: Equivalent returns 1 since the two matrices are equal
+
         """
         conf = np.array([[[1, 2], [3, 4]], [[1, 2], [3, 4]]], dtype=int)
         saved = np.array([[[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
@@ -17,8 +19,10 @@ class TestEquivalent(unittest.TestCase):
 
     def test_equivalent_different(self):
         """
-        Test case where the configuration 'conf' is different from all the elements
-        in the 'saved' array.
+        given: a configuration non-equivalent to the one already saved
+        when: calling Equivalent function
+        expected output: Equivalent returns 0 since the two matrices are not equivalent
+        
         """
         conf = np.array([[[1, 2], [3, 4]], [[1, 2], [3, 5]]], dtype=int)
         saved = np.array([[[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
@@ -27,7 +31,10 @@ class TestEquivalent(unittest.TestCase):
 
     def test_equivalent_no_saved(self):
         """
-        Test case where there are no saved configurations (i.e., 'saved' is an empty array).
+        given: a configuration and saved empty
+        when: calling Equivalent function
+        expected output: Equivalent returns 0 since there are no saved matrices
+        
         """
         conf = np.array([[[1, 2], [3, 4]], [[1, 2], [3, 4]]], dtype=int)
         saved = np.array([], dtype=int).reshape(0, 0, 0, 0)
@@ -36,8 +43,10 @@ class TestEquivalent(unittest.TestCase):
 
     def test_equivalent_equivalent_transformation(self):
         """
-        Test case where the configuration 'conf' is equivalent to one of the elements
-        in the 'saved' array after applying a transformation (e.g., translation).
+        given: a configuration equivalent by transaltion to the one already saved
+        when: calling Equivalent function
+        expected output: Equivalent returns 1 since the two matrices are equivalent
+
         """
         conf = np.array([[[3, 4], [1, 2]], [[3, 4], [1, 2]]], dtype=int)
         saved = np.array([[[[1, 2], [3, 4]], [[1, 2], [3, 4]]]], dtype=int)
