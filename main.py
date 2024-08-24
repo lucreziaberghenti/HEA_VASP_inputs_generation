@@ -8,9 +8,9 @@ ncol, nrow, nslice= 5, 4, 3
 
 #define the elements of the new configuration
 #np.arange produces the np array [1,2,3,4,5]
-#np.repeat repeates each element 5 times (HEA have equal concentration of each element)
-#60 atoms in total
-n=np.repeat(np.arange(1,6), 5)
+#np.repeat repeates each element 12 times 
+#60 atoms in total each of 5 elements repeated 12 times (HEA have equal concentration of each element)
+n=np.repeat(np.arange(1,6), 12)
 
 #path of the input settings
 settings_path='./tests/settings_tests.json'

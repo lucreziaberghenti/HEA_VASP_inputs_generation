@@ -249,9 +249,9 @@ def newConf(saved, nslice, nrow, ncol, n):
         #fix the random seed
         np.random.seed(0)
         # random permutation of linear array
-        temp=np.random.permutation(temp)
+        n=np.random.permutation(n)
         # then reshap the permutated array with the desired dimensions
-        conf=np.reshape(temp, (nslice,nrow,ncol))
+        conf=np.reshape(n, (nslice,nrow,ncol))
         # check if conf is equivalente to the matrices of saved
         repeat=Equivalent(conf, saved)
         
