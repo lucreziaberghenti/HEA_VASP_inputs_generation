@@ -6,7 +6,7 @@ import json
 
 #load the dictionary used for testing: settings_tests.json
 #in this dictionary alat=3.6
-file_path = './tests/settings_tests.json' 
+settings_path = './tests/settings_tests.json' 
 
 class TestCoordinates(unittest.TestCase):
     """
@@ -19,7 +19,7 @@ class TestCoordinates(unittest.TestCase):
         expected output: a 3-dim array of 60 atoms having dimensions (60,3)
         
         """
-        coords = Coordinates(file_path)
+        coords = Coordinates(settings_path)
         self.assertEqual(coords.shape, (60, 3))
 
     
@@ -41,7 +41,7 @@ class TestCoordinates(unittest.TestCase):
             # ... more positions can be added as needed ...
         ])
       
-        coords = Coordinates(file_path)
+        coords = Coordinates(settings_path)
       
         # Verify that the first n positions are equal to the expected ones (with a certain tolerance)
         np.testing.assert_almost_equal(coords[:len(expected_positions)], expected_positions, decimal=6)
@@ -54,7 +54,7 @@ class TestCoordinates(unittest.TestCase):
 
         """
         
-        coords = Coordinates(file_path)
+        coords = Coordinates(settings_path)
 
         # Test the distance between nearest neighbors
         d = np.linalg.norm(coords[0] - coords[1]) 
@@ -70,7 +70,7 @@ class TestCoordinates(unittest.TestCase):
 
         """
 
-        coords = Coordinates(file_path)
+        coords = Coordinates(settings_path)
 
         # Test the angle between base vectors
         v1 = coords[1] - coords[0]
