@@ -85,7 +85,7 @@ class TestVASPInput(unittest.TestCase):
         """
         given: settings_tests.json (dictionary used for testing only), the integer n of the nth configuration, the lists of species and positions
         when: calling the VASP_input function 
-        expected output: a new directory 'conf_1' is created
+        expected output: a new directory 'conf_1' is created in 'tests' folder
         """
         species = ['Co', 'Cr', 'Fe']
         positions = [(0, 0, 0), (0.5, 0.5, 0.5), (1, 1, 1)]
