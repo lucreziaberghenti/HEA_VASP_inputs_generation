@@ -19,9 +19,11 @@ def VASP_input(species, positions, n, settings_path, conf_path):
     positions (list): List of positions of atoms.
     n (int): Number of the configuration generated.
     path of the input settings (json file).
+    settings_path (str): The path of settings.json file where input parameters are stored.
+    conf_path (str): The path of the folder where the directory containing input files of the new configuration will be saved.
 
     Returns:
-    None
+    A directory 'conf_n' (for the nth configuration) containing VASP input files: POSCAR, POTCAR, KPOITS, INCAR.
     """
     #load settings from the input path
     with open(settings_path, 'r') as file:
@@ -129,12 +131,12 @@ def Generate_species(conf):
     return species
 
 # function that outputs a (60,3) np.array writing the lattice sites for each atom in cartesian coordinates [x, y, z] of a (111)-fcc lattice
-def Coordinates(path): 
+def Coordinates(settings_path): 
     """
     Generates a numpy array of lattice coordinates for a (111)-fcc lattice.
 
     Args:
-    path of the input settings (json file)
+    path of the json file settings.json containing lattice parameter
 
     Returns:
     coord (ndarray): Array of lattice coordinates.
@@ -143,7 +145,7 @@ def Coordinates(path):
 
     #load settings from the input path
     #load settings from the input path
-    with open(path, 'r') as file:
+    with open(settings_path, 'r') as file:
         settings = json.load(file)
 
     # lattice parameter, angstrom 
@@ -235,7 +237,10 @@ def newConf(saved, nslice, nrow, ncol, n, seed):
     Generates a new random configuration that is non-equivalent to the ones in a list.
 
     Args:
-    saved (list): List of saved matrices, dimensions: nslice, nrow, ncol of the new configuration, n 1-dim np array of the integer elements, random seed
+    saved (list): list of saved matrices 
+    nslice, nrow, ncol (int): dimensions of the new configuration
+    n (array of int): 1-dim array of the integer elements
+    seed (int): random seed
 
     Returns:
     conf (ndarray): New random configuration.
