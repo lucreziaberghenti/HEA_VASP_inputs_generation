@@ -56,7 +56,7 @@ The code is organized into the following components:
      ```
      python -m unittest tests/file_name.py
      ```
-- **`settings.json/`:** A dictionary of the parameters that the user can modify: lattice parameter (alat) and INCAR, KPOINTS, and pseudopotentials settings.
+- **`settings.json/`:** A dictionary of the parameters that the user can modify: lattice parameter (alat), INCAR, KPOINTS, and pseudopotentials settings.
 - **`paths.json/`:** A json file containing paths and the random seed that the user can modify.
 - **`ase_pseudo/`:** A folder containing the pseudopotentials stored in POTCAR files for each element, necessary for writing VASP input files.
 
