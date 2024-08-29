@@ -26,6 +26,7 @@ Each time the code is executed, it creates the input files: `INCAR`, `POSCAR`, `
      ```
 
 2. **Configuration:**
+
     Modify the paths and the random seed in the `paths.json` file:
      - `settings`, path of the json of file containing the input paramters
      - `saved`, path of the npy variable where generated configurations are saved
